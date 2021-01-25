@@ -1,7 +1,7 @@
 {
   "name": "unlv-telemedicine",
-  "version": "1.0.0",
-  "description": "Project Owner: Phillipe Austria - Research Assistant",
+  "version": "0.1.0",
+  "description": "A Telemedicine Application.",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
