@@ -1,10 +1,10 @@
 <p align="center">
   <img src="./assets/imgs/telemedicine-pic.jpg" width="350" /><br>
-  <img src="https://img.shields.io/npm/v/npm" alt="npm-version" />
   <img src="https://img.shields.io/github/package-json/v/phillipe-austria/unlv-telemedicine" alt="version" />
+  <img src="https://img.shields.io/npm/v/npm" alt="npm-version" />
 </p>
 
-# Telemedicine Application
+# A Telemedicine Application
 
 <img src="./assets/imgs/unlv-emblem.png" align="right" width="200" />
 
