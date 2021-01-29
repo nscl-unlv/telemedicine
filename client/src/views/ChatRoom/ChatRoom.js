@@ -1,11 +1,11 @@
 import React from 'react';
-import Caller from 'components/Caller';
+//import Caller from 'components/Caller';
+import ChatRoomMenu from 'components/ChatRoomMenu';
 import { 
   Checkbox,
   Grid, 
   Image,
   Header,
-  Icon,
   Menu,
   Segment,
   Sidebar
@@ -20,7 +20,7 @@ function ChatRoom() {
         <Checkbox
           checked={visible}
           label={{ children: <code>visible</code> }}
-          onChange={(e, data) => setVisible(data.checked)}
+          onChange={(_, data) => setVisible(data.checked)}
         />
       </Grid.Column>
 
@@ -34,25 +34,16 @@ function ChatRoom() {
             onHide={() => setVisible(false)}
             vertical
             visible={visible}
-            width='thin'
+            width='wide'
           >
-            <Menu.Item as='a'>
-              <Icon name='home' />
-              Home
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='gamepad' />
-              Games
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='camera' />
-              Channels
-            </Menu.Item>
+            <ChatRoomMenu />
           </Sidebar>
 
           <Sidebar.Pusher>
             <Segment basic>
-              <Header as='h3'>Application Content</Header>
+              <Header as='h3'>Chat Room View</Header>
+              <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' /><br/>
+              <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' /><br/>
               <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
             </Segment>
           </Sidebar.Pusher>
