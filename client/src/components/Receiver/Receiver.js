@@ -1,47 +1,42 @@
 import React, { useEffect, useState, useRef } from 'react';
 import io from "socket.io-client";
 import Peer from "simple-peer";
-import styled from "styled-components";
-
-const Container = styled.div`
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Row = styled.div`
-  display: flex;
-  width: 100%;
-`;
+import styled from 'styled-components';
 
 const Video = styled.video`
   border: 1px solid blue;
-  width: 50%;
-  height: 50%;
+  width: 100%;
 `;
 
 function Receiver() {
   const [yourID, setYourID] = useState("");
   const [users, setUsers] = useState({});
-  const [stream, setStream] = useState();
   const [receivingCall, setReceivingCall] = useState(false);
   const [caller, setCaller] = useState("");
   const [callerSignal, setCallerSignal] = useState();
   const [callAccepted, setCallAccepted] = useState(false);
+  const [stream, setStream] = useState(null);
 
-  const userVideo = useRef();
   const partnerVideo = useRef();
   const socket = useRef();
+  const callerVideo = useRef();
 
   useEffect(() => {
     socket.current = io('/');
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-      setStream(stream);
-      if (userVideo.current) {
-        userVideo.current.srcObject = stream;
-      }
-    })
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ 
+          video: {
+            facingMode:'user'
+          }, 
+          audio: false 
+        }).then(stream => {
+          setStream(stream);
+          if (callerVideo.current) {
+             callerVideo.current.srcObject = stream;
+          }
+      })
+    }
 
     socket.current.on("yourID", (id) => {
       setYourID(id);
@@ -61,22 +56,7 @@ function Receiver() {
     const peer = new Peer({
       initiator: true,
       trickle: false,
-      config: {
-
-        iceServers: [
-            {
-                urls: "stun:numb.viagenie.ca",
-                username: "sultan1640@gmail.com",
-                credential: "98376683"
-            },
-            {
-                urls: "turn:numb.viagenie.ca",
-                username: "sultan1640@gmail.com",
-                credential: "98376683"
-            }
-        ]
-    },
-      stream: stream,
+      stream: stream
     });
 
     peer.on("signal", data => {
@@ -114,13 +94,6 @@ function Receiver() {
     peer.signal(callerSignal);
   }
 
-  let UserVideo;
-  if (stream) {
-    UserVideo = (
-      <Video playsInline muted ref={userVideo} autoPlay />
-    );
-  }
-
   let PartnerVideo;
   if (callAccepted) {
     PartnerVideo = (
@@ -138,25 +111,18 @@ function Receiver() {
     )
   }
   return (
-    <Container>
-      <Row>
-        {UserVideo}
-        {PartnerVideo}
-      </Row>
-      <Row>
-        {Object.keys(users).map(key => {
-          if (key === yourID) {
-            return null;
-          }
-          return (
-            <button onClick={() => callPeer(key)}>Call {key}</button>
-          );
-        })}
-      </Row>
-      <Row>
-        {incomingCall}
-      </Row>
-    </Container>
+    <>
+      {PartnerVideo}
+      {Object.keys(users).map(key => {
+        if (key === yourID) {
+          return null;
+        }
+        return (
+          <button onClick={() => callPeer(key)}>Call {key}</button>
+        );
+      })}
+      {incomingCall}
+    </>
   );
 }
 

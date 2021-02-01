@@ -9,11 +9,13 @@ import {
   Segment,
   Sidebar
 } from 'semantic-ui-react';
-import styled from "styled-components";
+import Receiver from 'components/Receiver';
+import styled from 'styled-components';
 
 const VideoContainer = styled.div`
   position: relative;
   width: 100%;
+  min-height: 100hv;
 `;
 
 const CallerPosition = styled.div`
@@ -56,7 +58,8 @@ function ChatRoom() {
               <Header as='h3'>Chat Room View</Header>
 
               <VideoContainer>
-                <Caller />
+                {/* <Caller /> */}
+                <Receiver />
 
                 <CallerPosition>
                   <Caller />
