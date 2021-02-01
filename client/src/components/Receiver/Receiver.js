@@ -21,7 +21,7 @@ const Video = styled.video`
   height: 50%;
 `;
 
-function Caller() {
+function Receiver() {
   const [yourID, setYourID] = useState("");
   const [users, setUsers] = useState({});
   const [stream, setStream] = useState();
@@ -160,4 +160,4 @@ function Caller() {
   );
 }
 
-export default Caller;
+export default Receiver;

@@ -4,12 +4,24 @@ import ChatRoomMenu from 'components/ChatRoomMenu';
 import { 
   Checkbox,
   Grid, 
-  Image,
   Header,
   Menu,
   Segment,
   Sidebar
 } from 'semantic-ui-react';
+import styled from "styled-components";
+
+const VideoContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const CallerPosition = styled.div`
+  position: absolute;
+  width: 25%;
+  top: 0;
+  right: 0;
+`;
 
 function ChatRoom() {
   const [visible, setVisible] = React.useState(false);
@@ -42,7 +54,15 @@ function ChatRoom() {
           <Sidebar.Pusher>
             <Segment basic>
               <Header as='h3'>Chat Room View</Header>
-              {/* <Caller /> */}
+
+              <VideoContainer>
+                <Caller />
+
+                <CallerPosition>
+                  <Caller />
+                </CallerPosition>
+              </VideoContainer>
+
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
