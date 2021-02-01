@@ -3,9 +3,22 @@ import io from "socket.io-client";
 import Peer from "simple-peer";
 import styled from "styled-components";
 
+const Container = styled.div`
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Row = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
 const Video = styled.video`
   border: 1px solid blue;
-  width: 100%;
+  width: 50%;
+  height: 50%;
 `;
 
 function Caller() {
@@ -22,34 +35,26 @@ function Caller() {
   const socket = useRef();
 
   useEffect(() => {
-    // socket.current = io('/');
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ 
-          video: {
-            facingMode:'user'
-          }, 
-          audio: true 
-        }).then(stream => {
-          setStream(stream);
-          if (userVideo.current) {
-            userVideo.current.srcObject = stream;
-          }
-      })
-    }
+    socket.current = io('/');
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+      setStream(stream);
+      if (userVideo.current) {
+        userVideo.current.srcObject = stream;
+      }
+    })
 
-    // socket.current.on("yourID", (id) => {
-    //   setYourID(id);
-    // })
-    // socket.current.on("allUsers", (users) => {
-    //   setUsers(users);
-    // })
+    socket.current.on("yourID", (id) => {
+      setYourID(id);
+    })
+    socket.current.on("allUsers", (users) => {
+      setUsers(users);
+    })
 
-    // socket.current.on("hey", (data) => {
-    //   setReceivingCall(true);
-    //   setCaller(data.from);
-    //   setCallerSignal(data.signal);
-    // })
+    socket.current.on("hey", (data) => {
+      setReceivingCall(true);
+      setCaller(data.from);
+      setCallerSignal(data.signal);
+    })
   }, []);
 
   function callPeer(id) {
@@ -133,19 +138,25 @@ function Caller() {
     )
   }
   return (
-    <>
-      {UserVideo}
-      {PartnerVideo}
-      {/* {Object.keys(users).map(key => { */}
-      {/*   if (key === yourID) { */}
-      {/*     return null; */}
-      {/*   } */}
-      {/*   return ( */}
-      {/*     <button onClick={() => callPeer(key)}>Call {key}</button> */}
-      {/*   ); */}
-      {/* })} */}
-      {incomingCall}
-    </>
+    <Container>
+      <Row>
+        {UserVideo}
+        {PartnerVideo}
+      </Row>
+      <Row>
+        {Object.keys(users).map(key => {
+          if (key === yourID) {
+            return null;
+          }
+          return (
+            <button onClick={() => callPeer(key)}>Call {key}</button>
+          );
+        })}
+      </Row>
+      <Row>
+        {incomingCall}
+      </Row>
+    </Container>
   );
 }
 
