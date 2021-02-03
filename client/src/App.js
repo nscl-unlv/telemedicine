@@ -1,13 +1,16 @@
 import React from 'react';
 import './App.css';
 import ChatRoom from './views/ChatRoom'
+import { Container, Header } from 'semantic-ui-react';
 
 function App() {
-
   return (
-    <div>
-      <h1>Telemedicine Application</h1>
-      <ChatRoom />
+    <div className="App">
+      <Container fluid>
+        <Header as='h1'>Telemedicine Application</Header>
+
+        <ChatRoom />
+      </Container>
     </div>
   );
 }
