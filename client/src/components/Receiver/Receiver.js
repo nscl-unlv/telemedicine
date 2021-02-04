@@ -1,6 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { 
+  useContext,
+  useEffect, 
+  useState, 
+  useRef } 
+from 'react';
 import io from "socket.io-client";
 import Peer from "simple-peer";
+import { StreamContext } from 'contexts/StreamContext';
 import styled from 'styled-components';
 
 const Video = styled.video`
@@ -15,28 +21,14 @@ function Receiver() {
   const [caller, setCaller] = useState("");
   const [callerSignal, setCallerSignal] = useState();
   const [callAccepted, setCallAccepted] = useState(false);
-  const [stream, setStream] = useState(null);
 
   const partnerVideo = useRef();
   const socket = useRef();
-  const callerVideo = useRef();
+
+  const { streamRef } = useContext(StreamContext);
 
   useEffect(() => {
     socket.current = io('/');
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ 
-          video: {
-            facingMode:'user'
-          }, 
-          audio: false 
-        }).then(stream => {
-          setStream(stream);
-          if (callerVideo.current) {
-             callerVideo.current.srcObject = stream;
-          }
-      })
-    }
 
     socket.current.on("yourID", (id) => {
       setYourID(id);
@@ -56,7 +48,7 @@ function Receiver() {
     const peer = new Peer({
       initiator: true,
       trickle: false,
-      stream: stream
+      stream: streamRef.current.srcObject
     });
 
     peer.on("signal", data => {
@@ -81,7 +73,7 @@ function Receiver() {
     const peer = new Peer({
       initiator: false,
       trickle: false,
-      stream: stream,
+      stream: streamRef.current.srcObject,
     });
     peer.on("signal", data => {
       socket.current.emit("acceptCall", { signal: data, to: caller })

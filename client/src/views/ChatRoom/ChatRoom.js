@@ -17,7 +17,7 @@ import styled from 'styled-components';
 const VideoContainer = styled.div`
   position: relative;
   width: 100%;
-  min-height: 100hv;
+  min-height: 100vh;
 `;
 
 const CallerPosition = styled.div`
