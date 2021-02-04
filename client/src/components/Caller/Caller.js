@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useContext } from 'react';
+import { StreamContext } from 'contexts/StreamContext';
 import styled from "styled-components";
 
 const Video = styled.video`
@@ -7,37 +8,11 @@ const Video = styled.video`
 `;
 
 function Caller() {
-  const [stream, setStream] = useState(null);
-  const callerVideo = useRef(null);
-
-  useEffect(() => {
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ 
-          video: {
-            facingMode:'user'
-          }, 
-          audio: true 
-        }).then(stream => {
-          setStream(stream);
-          if (callerVideo.current) {
-             callerVideo.current.srcObject = stream;
-          }
-      })
-    }
-  }, []);
-
-
-  let CallerVideo;
-  if (stream) {
-    CallerVideo = (
-      <Video playsInline muted ref={callerVideo} autoPlay />
-    );
-  }
+  const { streamRef } = useContext(StreamContext);
 
   return (
     <>
-      {CallerVideo}
+      <Video playsInline muted ref={streamRef} autoPlay />
     </>
   );
 }

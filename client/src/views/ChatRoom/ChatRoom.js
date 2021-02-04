@@ -5,17 +5,19 @@ import {
   Checkbox,
   Grid, 
   Header,
+  Image,
   Menu,
   Segment,
   Sidebar
 } from 'semantic-ui-react';
 import Receiver from 'components/Receiver';
+import StreamContextProvider from 'contexts/StreamContext';
 import styled from 'styled-components';
 
 const VideoContainer = styled.div`
   position: relative;
   width: 100%;
-  min-height: 100hv;
+  min-height: 100vh;
 `;
 
 const CallerPosition = styled.div`
@@ -58,12 +60,14 @@ function ChatRoom() {
               <Header as='h3'>Chat Room View</Header>
 
               <VideoContainer>
-                {/* <Caller /> */}
-                <Receiver />
+                <StreamContextProvider>
+                  <Image src='https://cdn.ndtv.com/tech/images/gadgets/pikachu_hi_pokemon.jpg?output-quality=80&output-format=webp' />
+                  {/* <Receiver /> */}
 
-                <CallerPosition>
-                  <Caller />
-                </CallerPosition>
+                  <CallerPosition>
+                    <Caller />
+                  </CallerPosition>
+                </StreamContextProvider>
               </VideoContainer>
 
             </Segment>
