@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
-import ChatRoom from 'views/ChatRoom'
-import WaitingRoom from 'views/WaitingRoom'
+import ChatRoom from 'views/ChatRoom';
+import CheckIn from 'views/CheckIn';
+import WaitingRoom from 'views/WaitingRoom';
 import { Container, Header } from 'semantic-ui-react';
 import {
   BrowserRouter as Router,
@@ -20,6 +21,7 @@ function App() {
           <nav>
             <ul>
               <li><Link to='/mainmenu'>Main Menu</Link></li>
+              <li><Link to='/checkin'>Check-In</Link></li>
               <li><Link to='/waitingroom'>Waiting Room</Link></li>
               <li><Link to='/chatroom'>Chat Room</Link></li>
             </ul>
@@ -27,6 +29,10 @@ function App() {
 
       
           <Switch>
+            <Route path='/checkin'>
+              <CheckIn />
+            </Route>
+
             <Route path='/waitingroom'>
               <WaitingRoom />
             </Route>
