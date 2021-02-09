@@ -31,6 +31,12 @@ io.on('connection', socket => {
     })
 });
 
+// client endpoints
+app.get('/waitingroom', (req, res) => {
+  console.log('/waitingroom queryied');
+  res.send('response from server');
+});
+
 server.listen(port, () => {
-    console.log(`socket.io server listening on ${port}`)
+    console.log(`application server listening on ${port}`)
 });
