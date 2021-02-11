@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const R = require('ramda');
 
+// TEST
 let waitingRoom = {
   count: 2,
   patients: [ '1', '2' ]
@@ -16,6 +17,7 @@ router.route('/patient/:id')
   .post((req, res) => {
     waitingRoom.count = waitingRoom.count + 1;
     waitingRoom.patients.push(req.params.id);
+    console.log(`added patient to waiting room: ${req.params.id}`);
     res.json(waitingRoom);;
   })
   .delete((req, res) => {
@@ -27,7 +29,7 @@ router.route('/patient/:id')
     const newWaitingRoom = R.evolve(transform, waitingRoom);
     waitingRoom = newWaitingRoom
 
-    console.log(`removed patient Id: ${req.params.id}`);
+    console.log(`removed patient from waitin room: ${req.params.id}`);
     res.json(waitingRoom);
   });
 
