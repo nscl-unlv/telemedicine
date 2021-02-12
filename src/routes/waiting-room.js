@@ -15,8 +15,14 @@ router.get('/', (_, res) => {
 
 router.route('/patient/:id')
   .post((req, res) => {
-    waitingRoom.count = waitingRoom.count + 1;
-    waitingRoom.patients.push(req.params.id);
+    const transform = {
+      count: R.add(1),
+      patients: R.append(req.params.id)
+    };
+
+    const newWaitingRoom = R.evolve(transform, waitingRoom);
+    waitingRoom = newWaitingRoom;
+
     console.log(`added patient to waiting room: ${req.params.id}`);
     res.json(waitingRoom);;
   })
