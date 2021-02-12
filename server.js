@@ -4,8 +4,12 @@ const socket = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+const waitingRoomRoutes = require('./src/routes/waiting-room')
 const io = socket(server);
 const port = 8080;
+
+// Routes
+app.use('/waitingroom', waitingRoomRoutes);
 
 const users = {};
 
@@ -32,5 +36,5 @@ io.on('connection', socket => {
 });
 
 server.listen(port, () => {
-    console.log(`socket.io server listening on ${port}`)
+    console.log(`application server listening on ${port}`)
 });
