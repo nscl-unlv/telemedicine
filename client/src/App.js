@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import AppHeader from 'components/AppHeader';
-import AppBody from 'views/AppBody';
+import AppHeader from 'containers/AppHeader';
+import AppBody from 'containers/AppBody';
 import { 
   Container, 
   Grid,
