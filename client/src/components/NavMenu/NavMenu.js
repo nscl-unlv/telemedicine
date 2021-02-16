@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { 
   Icon,
   Menu,
   Sidebar
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { NavMenuContext } from 'contexts/NavMenuContext';
 
 
-function NavMenu(props) {
+function NavMenu() {
+  const { 
+    navMenuVisible, 
+    setNavMenuVisible 
+  } = useContext(NavMenuContext);
+
   return (
     <>
       <Sidebar 
@@ -15,16 +21,16 @@ function NavMenu(props) {
         animation='overlay'
         direction='top'
         icon='labeled'
-        onHide={() => props.setNavMenuVisible(false)}
+        onHide={() => setNavMenuVisible(false)}
         vertical
-        visible={props.navMenuVisible}
+        visible={navMenuVisible}
         width='thin'
       >
 
         <Menu.Item>
           <Link 
             to='/mainmenu' 
-            onClick={() => props.setNavMenuVisible(false)}
+            onClick={() => setNavMenuVisible(false)}
           >
             <Icon name='home' size='big' /><br />
             Main Menu
@@ -34,7 +40,7 @@ function NavMenu(props) {
         <Menu.Item>
           <Link 
             to='/checkin' 
-            onClick={() => props.setNavMenuVisible(false)}
+            onClick={() => setNavMenuVisible(false)}
           >
             <Icon name='check' size='big'/><br />
             Check-In
@@ -44,7 +50,7 @@ function NavMenu(props) {
         <Menu.Item>
           <Link 
             to='/waitingroom' 
-            onClick={() => props.setNavMenuVisible(false)}
+            onClick={() => setNavMenuVisible(false)}
           >
             <Icon name='wait' size='big' /><br />
             Waiting Room
@@ -54,7 +60,7 @@ function NavMenu(props) {
         <Menu.Item>
           <Link 
             to='/callroom' 
-            onClick={() => props.setNavMenuVisible(false)}
+            onClick={() => setNavMenuVisible(false)}
           >
             <Icon name='call' size='big' /><br />
             Call Room
@@ -64,7 +70,7 @@ function NavMenu(props) {
         <Menu.Item>
           <Link 
             to='/chatroom' 
-            onClick={() => props.setNavMenuVisible(false)}
+            onClick={() => setNavMenuVisible(false)}
           >
             <Icon name='video' size='big' /><br />
             Chat Room

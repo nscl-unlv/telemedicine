@@ -17,7 +17,7 @@ import {
 } from 'semantic-ui-react';
 
 
-function AppBody(props) {
+function AppBody() {
   return (
     <>
       <Grid.Row style={{height: '95%'}}>
@@ -25,10 +25,7 @@ function AppBody(props) {
 
           <Router>
             <Sidebar.Pushable>
-              <NavMenu
-                navMenuVisible={props.navMenuVisible}
-                setNavMenuVisible={props.setNavMenuVisible}
-              />
+              <NavMenu />
 
               <Sidebar.Pusher>
                 <Segment basic>
