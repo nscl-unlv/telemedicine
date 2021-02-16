@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { 
   Grid,
   Header,
   Icon,
 } from 'semantic-ui-react';
+import { NavMenuContext } from 'contexts/NavMenuContext';
 
-function AppHeader(props) {
+function AppHeader() {
+  const { setNavMenuVisible } = useContext(NavMenuContext);
+
   return (
     <>
       <Grid.Row style={{height: '5%'}}>
@@ -13,7 +16,7 @@ function AppHeader(props) {
           <Icon
             name='bars'
             size='large'
-            onClick={() => props.setNavMenuVisible(true)}
+            onClick={() => setNavMenuVisible(true)}
           />
         </Grid.Column>
 
