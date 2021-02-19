@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ChatRoom from 'views/ChatRoom';
 import CheckIn from 'views/CheckIn';
 import WaitingRoom from 'views/WaitingRoom';
 import CallRoom from 'views/CallRoom';
+import HomeDoctor from 'views/HomeDoctor';
 import NavMenu from 'components/NavMenu';
 
 import {
@@ -11,17 +12,34 @@ import {
   Switch
 } from 'react-router-dom';
 import { 
+  Button,
   Grid,
   Segment,
   Sidebar
 } from 'semantic-ui-react';
 
-
 function AppBody() {
+  // TEST
+  const [isDoctor, setIsDoctor] = useState(true);
+
   return (
     <>
       <Grid.Row style={{height: '95%'}}>
         <Grid.Column width={16}>
+          <Button 
+            basic 
+            color='red'
+            onClick={() => setIsDoctor(true)}
+          >
+            Doctor
+          </Button>
+          <Button 
+            basic 
+            color='blue'
+            onClick={() => setIsDoctor(false)}
+          >
+            Patient
+          </Button>
 
           <Router>
             <Sidebar.Pushable>
@@ -30,6 +48,10 @@ function AppBody() {
               <Sidebar.Pusher>
                 <Segment basic>
                   <Switch>
+                    <Route path='/home'>
+                      <HomeDoctor />
+                    </Route>
+
                     <Route path='/checkin'>
                       <CheckIn />
                     </Route>
