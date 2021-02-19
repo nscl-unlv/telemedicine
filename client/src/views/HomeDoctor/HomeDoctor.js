@@ -4,7 +4,7 @@ function HomeDoctor() {
 
   return (
     <>
-      <h1>HomeDoctor</h1>
+      <h1>Home Doctor</h1>
     </>
   );
 }
