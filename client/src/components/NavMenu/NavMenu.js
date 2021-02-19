@@ -29,11 +29,11 @@ function NavMenu() {
 
         <Menu.Item>
           <Link 
-            to='/mainmenu' 
+            to='/home' 
             onClick={() => setNavMenuVisible(false)}
           >
             <Icon name='home' size='big' /><br />
-            Main Menu
+           Home 
           </Link>
         </Menu.Item>
 
