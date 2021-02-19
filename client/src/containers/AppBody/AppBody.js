@@ -4,6 +4,7 @@ import CheckIn from 'views/CheckIn';
 import WaitingRoom from 'views/WaitingRoom';
 import CallRoom from 'views/CallRoom';
 import HomeDoctor from 'views/HomeDoctor';
+import HomePatient from 'views/HomePatient';
 import NavMenu from 'components/NavMenu';
 
 import {
@@ -21,6 +22,14 @@ import {
 function AppBody() {
   // TEST
   const [isDoctor, setIsDoctor] = useState(true);
+
+  function ShowHome() {
+    if (isDoctor) {
+      return <HomeDoctor />;
+    } else {
+      return <HomePatient />;
+    }
+  }
 
   return (
     <>
@@ -49,7 +58,7 @@ function AppBody() {
                 <Segment basic>
                   <Switch>
                     <Route path='/home'>
-                      <HomeDoctor />
+                      <ShowHome />
                     </Route>
 
                     <Route path='/checkin'>
