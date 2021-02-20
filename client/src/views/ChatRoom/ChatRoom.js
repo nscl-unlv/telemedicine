@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Caller from 'components/Caller';
 import ChatRoomMenu from 'components/ChatRoomMenu';
 import { 
+  Button,
   Checkbox,
   Grid, 
   Header,
@@ -11,7 +12,7 @@ import {
   Sidebar
 } from 'semantic-ui-react';
 import Receiver from 'components/Receiver';
-import StreamContextProvider from 'contexts/StreamContext';
+import { StreamContext } from 'contexts/StreamContext';
 import styled from 'styled-components';
 
 const VideoContainer = styled.div`
@@ -29,6 +30,7 @@ const CallerPosition = styled.div`
 
 function ChatRoom() {
   const [visible, setVisible] = React.useState(false);
+  const { streamOff } = useContext(StreamContext);
 
   return (
     <Grid columns={1}>
@@ -38,6 +40,8 @@ function ChatRoom() {
           label={{ children: <code>visible</code> }}
           onChange={(_, data) => setVisible(data.checked)}
         />
+        <Button onClick={() => streamOff()}>Test</Button>
+
       </Grid.Column>
 
       <Grid.Column>
@@ -60,14 +64,12 @@ function ChatRoom() {
               <Header as='h3'>Chat Room View</Header>
 
               <VideoContainer>
-                <StreamContextProvider>
-                  <Image src='https://cdn.ndtv.com/tech/images/gadgets/pikachu_hi_pokemon.jpg?output-quality=80&output-format=webp' />
-                  {/* <Receiver /> */}
+                <Image src='https://cdn.ndtv.com/tech/images/gadgets/pikachu_hi_pokemon.jpg?output-quality=80&output-format=webp' />
+                {/* <Receiver /> */}
 
-                  <CallerPosition>
-                    <Caller />
-                  </CallerPosition>
-                </StreamContextProvider>
+                <CallerPosition>
+                  <Caller />
+                </CallerPosition>
               </VideoContainer>
 
             </Segment>

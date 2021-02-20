@@ -7,6 +7,8 @@ import HomeDoctor from 'views/HomeDoctor';
 import HomePatient from 'views/HomePatient';
 import NavMenu from 'components/NavMenu';
 
+import StreamContextProvider from 'contexts/StreamContext';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -57,6 +59,7 @@ function AppBody() {
               <Sidebar.Pusher>
                 <Segment basic>
                   <Switch>
+
                     <Route path='/home'>
                       <ShowHome />
                     </Route>
@@ -74,8 +77,11 @@ function AppBody() {
                     </Route>
 
                     <Route path='/chatroom'>
-                      <ChatRoom />
+                      <StreamContextProvider>
+                        <ChatRoom />
+                      </StreamContextProvider>
                     </Route>
+
                   </Switch>
                 </Segment>
               </Sidebar.Pusher>
