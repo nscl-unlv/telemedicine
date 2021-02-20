@@ -1,0 +1,17 @@
+#end-call {
+    margin-top: 10px;
+}
+
+#video-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  text-align: center;
+}
+
+#caller-position {
+  position: absolute;
+  width: 25%;
+  top: 0;
+  right: 0;
+}
