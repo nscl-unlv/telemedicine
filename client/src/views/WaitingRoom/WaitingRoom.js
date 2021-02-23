@@ -1,16 +1,22 @@
 import React, { useContext, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 //import Socket from 'services/Socket';
-import { StreamContext } from 'contexts/StreamContext';
+import { SocketContext } from 'contexts/SocketContext';
 
 
 function WaitingRoom() {
-  const { mySocketId } = useContext(StreamContext);
+  const { 
+    disconnectSocket,
+    getSocketId,
+    mySocketId
+  } = useContext(SocketContext);
 
   useEffect(() => {
     // TODO: get from firebase
     const id = uuidv4();
     console.log(`test id: ${id}`);
+
+    getSocketId();
 
     // Send id to waiting room
     fetch(`/waitingroom/patient/${id}`, {
@@ -20,8 +26,7 @@ function WaitingRoom() {
     });
 
     // Dequeue id from waiting room
-    const cleanup = () => {
-      console.log('cleanup');
+    const dequeueWaitingRoom = () => {
       fetch(`/waitingroom/patient/${id}`, {
         method: 'delete'
       }).then(res => {
@@ -30,14 +35,15 @@ function WaitingRoom() {
     };
 
     // Dequeue id if tab closes
-    window.addEventListener('beforeunload', cleanup);
+    window.addEventListener('beforeunload', dequeueWaitingRoom);
 
     // Cleanup 
     return () => {
-      window.removeEventListener('beforeunload', cleanup);
-      cleanup();
+      console.log('cleanup waiting room');
+      window.removeEventListener('beforeunload', dequeueWaitingRoom);
+      dequeueWaitingRoom();
+      disconnectSocket();
     };
-
   }, []);
 
   return (

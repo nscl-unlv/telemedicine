@@ -22,7 +22,9 @@ io.on('connection', socket => {
     }
     socket.emit("yourID", socket.id);
     io.sockets.emit("allUsers", users);
+
     socket.on('disconnect', () => {
+      console.log(`${socket.id} disconnected`)
       delete users[socket.id];
     })
 

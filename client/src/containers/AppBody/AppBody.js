@@ -7,6 +7,7 @@ import HomeDoctor from 'views/HomeDoctor';
 import HomePatient from 'views/HomePatient';
 import NavMenu from 'components/NavMenu';
 
+import SocketContextProvider from 'contexts/SocketContext';
 import StreamContextProvider from 'contexts/StreamContext';
 
 import {
@@ -68,20 +69,21 @@ function AppBody() {
                       <CheckIn />
                     </Route>
 
-                    <Route path='/callroom'>
-                      <CallRoom />
-                    </Route>
+                    <SocketContextProvider>
+                      <Route path='/callroom'>
+                        <CallRoom />
+                      </Route>
 
-                     <StreamContextProvider>
-                       <Route path='/waitingroom'>
-                         <WaitingRoom />
-                       </Route>
+                      <Route path='/waitingroom'>
+                        <WaitingRoom />
+                      </Route>
 
-
-                       <Route path='/chatroom'>
-                           <ChatRoom />
-                       </Route>
-                    </StreamContextProvider>
+                      <Route path='/chatroom'>
+                        <StreamContextProvider>
+                          <ChatRoom />
+                        </StreamContextProvider>
+                      </Route>
+                    </SocketContextProvider>
 
                   </Switch>
                 </Segment>
