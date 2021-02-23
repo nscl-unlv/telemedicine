@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import Socket from 'services/Socket';
 
 
 function WaitingRoom() {
@@ -39,6 +40,7 @@ function WaitingRoom() {
 
   return (
     <>
+      <Socket />
       <h1>Waiting Room</h1>
     </>
   );
