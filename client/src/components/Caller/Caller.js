@@ -9,7 +9,7 @@ const Video = styled.video`
 
 function Caller() {
   const { streamRef } = useContext(StreamContext);
-
+  
   return (
     <>
       <Video playsInline muted ref={streamRef} autoPlay />

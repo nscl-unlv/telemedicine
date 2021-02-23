@@ -68,19 +68,20 @@ function AppBody() {
                       <CheckIn />
                     </Route>
 
-                    <Route path='/waitingroom'>
-                      <WaitingRoom />
-                    </Route>
-
                     <Route path='/callroom'>
                       <CallRoom />
                     </Route>
 
-                    <Route path='/chatroom'>
-                      <StreamContextProvider>
-                        <ChatRoom />
-                      </StreamContextProvider>
-                    </Route>
+                     <StreamContextProvider>
+                       <Route path='/waitingroom'>
+                         <WaitingRoom />
+                       </Route>
+
+
+                       <Route path='/chatroom'>
+                           <ChatRoom />
+                       </Route>
+                    </StreamContextProvider>
 
                   </Switch>
                 </Segment>

@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Socket from 'services/Socket';
+//import Socket from 'services/Socket';
+import { StreamContext } from 'contexts/StreamContext';
 
 
 function WaitingRoom() {
+  const { mySocketId } = useContext(StreamContext);
 
   useEffect(() => {
     // TODO: get from firebase
@@ -40,8 +42,8 @@ function WaitingRoom() {
 
   return (
     <>
-      <Socket />
       <h1>Waiting Room</h1>
+      <h2>socket id: {mySocketId}</h2>
     </>
   );
 }
