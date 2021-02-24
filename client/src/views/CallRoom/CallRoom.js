@@ -11,17 +11,19 @@ const patients = [
   { name: 'pikachu' },
   { name: 'charmander' }];
 
-
 function CallRoom() {
   const [patientIds, setPatientIds] = useState([]);
-  const [numPatients, setNumPatients] = useState();
+  const [numPatients, setNumPatients] = useState(null);
+  const [callAccepted, setCallAccepted] = useState(false);
   const { 
     disconnectSocket,
     getSocketId,
-    mySocketId
+    mySocketId,
+    socketRef
   } = useContext(SocketContext);
 
   useEffect(() => {
+
     // Fetch patients in waiting room
     fetch('/waitingroom')
       .then(res => res.json())
@@ -39,6 +41,32 @@ function CallRoom() {
     };
       
   }, []);
+
+  function callPeer(otherSocketId) {
+    //const peer = new Peer({
+    //  initiator: true,
+    //  trickle: false,
+    //  stream: streamRef.current.srcObject
+    //});
+
+    //peer.on("signal", data => {
+    //  socket.current.emit("callUser", { userToCall: id, signalData: data, from: yourID })
+    //})
+
+    //peer.on("stream", stream => {
+    //  if (partnerVideo.current) {
+    //    partnerVideo.current.srcObject = stream;
+    //  }
+    //});
+
+   socketRef.current.emit("callUser", { userToCall: otherSocketId, 
+                                        from: mySocketId });
+
+   socketRef.current.on("callAccepted", signal => {
+      setCallAccepted(true);
+      //peer.signal(signal);
+    });
+  }
 
   // TODO: useEffect to fetch patients from database 
 

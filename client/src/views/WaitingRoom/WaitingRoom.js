@@ -12,14 +12,14 @@ function WaitingRoom() {
   } = useContext(SocketContext);
 
   useEffect(() => {
-    // TODO: get from firebase
-    const id = uuidv4();
-    console.log(`test id: ${id}`);
+    // TODO: get from firebase and store in local storage
+    const userId = uuidv4();
+    //console.log(`test id: ${userId}`);
 
     getSocketId();
 
     // Send id to waiting room
-    fetch(`/waitingroom/patient/${id}`, {
+    fetch(`/waitingroom/patient/${userId}`, {
       method: 'post'
     }).then(res => {
       console.log(`add id to waiting room, status ${res.status}`);
@@ -27,7 +27,7 @@ function WaitingRoom() {
 
     // Dequeue id from waiting room
     const dequeueWaitingRoom = () => {
-      fetch(`/waitingroom/patient/${id}`, {
+      fetch(`/waitingroom/patient/${userId}`, {
         method: 'delete'
       }).then(res => {
         console.log(`dequed id from waiting room, status ${res.status}`);

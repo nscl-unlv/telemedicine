@@ -8,28 +8,36 @@ import io from "socket.io-client";
 export const SocketContext = createContext();
 
 function SocketContextProvider(props) {
+  const [userId, setUserId] = useState('');
   const [mySocketId, setMySocketId] = useState('');
-  const socket = useRef();
+  const socketRef = useRef();
 
   function getSocketId() {
-    socket.current = io('/');
+    socketRef.current = io('/', { query: `userId=${userId}` });
 
-    socket.current.on("yourID", (id) => {
+    socketRef.current.on("yourID", (id) => {
       setMySocketId(id);
     })
   }
 
   function disconnectSocket() {
     console.log('disconnnect socket');
-    socket.current.disconnect();
-    socket.current = null;
+    socketRef.current.disconnect();
+    socketRef.current = null;
+  }
+
+  function getUserId(userId) {
+    console.log(`user id: ${userId}`);
+    setUserId(userId);
   }
 
   return (
     <SocketContext.Provider value={{ 
-      getSocketId,
       disconnectSocket,
-      mySocketId
+      getSocketId,
+      getUserId,
+      mySocketId,
+      socketRef
     }}>
       {props.children}
     </SocketContext.Provider>

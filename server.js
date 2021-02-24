@@ -11,32 +11,55 @@ const port = 8080;
 // Routes
 app.use('/waitingroom', waitingRoomRoutes);
 
-const users = {};
+//function strMapToObj(map) {
+//  let obj = Object.create(null);
+//  for (let [k,v] of map) {
+//    obj[k] = v;
+//  }
+//  return obj;
+//}
+
+const users = new Map(); 
+
+// TEST move to seperate router
+app.get('/', (req, res) => {
+  console.log(users);
+  res.json(users);
+});
 
 // socket.io listeners go here
 io.on('connection', socket => {
-    if (!users[socket.id]) {
-      users[socket.id] = socket.id;
-      console.log(`User ${socket.id} connected`);
-      
-    }
-    socket.emit("yourID", socket.id);
-    io.sockets.emit("allUsers", users);
+  const socketId = socket.id
+  const userId = socket.request._query['userId'];
 
-    socket.on('disconnect', () => {
-      console.log(`${socket.id} disconnected`)
-      delete users[socket.id];
-    })
+  if (!users.get(socket.id)) {
+    users.set(socketId, userId);
+    console.log(`Socket Id: ${socketId} - User Id: ${userId} connected`);
+  }
 
-    socket.on("callUser", (data) => {
-      io.to(data.userToCall).emit('hey', {signal: data.signalData, from: data.from});
-    })
+  socket.emit("yourID", socketId);
 
-    socket.on("acceptCall", (data) => {
-      io.to(data.to).emit('callAccepted', data.signal);
-    })
+  io.sockets.emit("allUsers", users);
+
+  socket.on('disconnect', () => {
+    console.log(`${socketId} disconnected`)
+    users.delete(socketId);
+  })
+
+  //socket.on("callUser", (data) => {
+  //  io.to(data.userToCall).emit('hey', {signal: data.signalData, from: data.from});
+  //})
+
+  socket.on("callUser", (data) => {
+    io.to(data.userToCall).emit('hey', {from: data.from});
+  })
+
+  socket.on("acceptCall", (data) => {
+    io.to(data.to).emit('callAccepted', data.signal);
+  })
 });
 
+// serve application
 server.listen(port, () => {
     console.log(`application server listening on ${port}`)
 });
