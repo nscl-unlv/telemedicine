@@ -1,7 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-//import Socket from 'services/Socket';
 import { SocketContext } from 'contexts/SocketContext';
+
+// TEST
+import { UserIdContext } from 'contexts/UserIdContext';
 
 
 function WaitingRoom() {
@@ -10,11 +12,9 @@ function WaitingRoom() {
     getSocketId,
     mySocketId
   } = useContext(SocketContext);
+  const { userId } = useContext(UserIdContext);
 
   useEffect(() => {
-    // TODO: get from firebase and store in local storage
-    const userId = uuidv4();
-    //console.log(`test id: ${userId}`);
 
     getSocketId();
 

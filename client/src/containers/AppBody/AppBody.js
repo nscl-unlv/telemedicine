@@ -10,6 +10,9 @@ import NavMenu from 'components/NavMenu';
 import SocketContextProvider from 'contexts/SocketContext';
 import StreamContextProvider from 'contexts/StreamContext';
 
+// TEST
+import UserIdContextProvider from 'contexts/UserIdContext';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -61,29 +64,31 @@ function AppBody() {
                 <Segment basic>
                   <Switch>
 
-                    <Route path='/home'>
-                      <ShowHome />
-                    </Route>
-
-                    <Route path='/checkin'>
-                      <CheckIn />
-                    </Route>
-
-                    <SocketContextProvider>
-                      <Route path='/callroom'>
-                        <CallRoom />
+                    <UserIdContextProvider>
+                      <Route path='/home'>
+                        <ShowHome />
                       </Route>
 
-                      <Route path='/waitingroom'>
-                        <WaitingRoom />
+                      <Route path='/checkin'>
+                        <CheckIn />
                       </Route>
 
-                      <Route path='/chatroom'>
-                        <StreamContextProvider>
-                          <ChatRoom />
-                        </StreamContextProvider>
-                      </Route>
-                    </SocketContextProvider>
+                      <SocketContextProvider>
+                        <Route path='/callroom'>
+                          <CallRoom />
+                        </Route>
+
+                        <Route path='/waitingroom'>
+                          <WaitingRoom />
+                        </Route>
+
+                        <Route path='/chatroom'>
+                          <StreamContextProvider>
+                            <ChatRoom />
+                          </StreamContextProvider>
+                        </Route>
+                      </SocketContextProvider>
+                    </UserIdContextProvider>
 
                   </Switch>
                 </Segment>
