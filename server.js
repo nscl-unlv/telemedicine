@@ -11,20 +11,21 @@ const port = 8080;
 // Routes
 app.use('/waitingroom', waitingRoomRoutes);
 
-//function strMapToObj(map) {
-//  let obj = Object.create(null);
-//  for (let [k,v] of map) {
-//    obj[k] = v;
-//  }
-//  return obj;
-//}
+function strMapToObj(map) {
+  let obj = {};
+  for (let [k,v] of map) {
+    obj[k] = v;
+  }
+  return obj;
+}
 
 const users = new Map(); 
 
 // TEST move to seperate router
 app.get('/', (req, res) => {
-  console.log(users);
-  res.json(users);
+  console.log('requested all connected socket users');
+  const usersJson = strMapToObj(users);
+  res.json(usersJson);
 });
 
 // socket.io listeners go here
