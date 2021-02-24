@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { 
+  useContext,
+  useEffect, 
+  useState } 
+from 'react';
 import { Button, Card, Image } from 'semantic-ui-react';
 import boyAvator from './images/boy-avatar.png';
+import { SocketContext } from 'contexts/SocketContext';
 
 const patients = [
   { name: 'pikachu' },
@@ -8,11 +13,15 @@ const patients = [
 
 
 function CallRoom() {
-  const [patientIds, setPatientIds] = useState([])
-  const [numPatients, setNumPatients] = useState()
+  const [patientIds, setPatientIds] = useState([]);
+  const [numPatients, setNumPatients] = useState();
+  const { 
+    disconnectSocket,
+    getSocketId,
+    mySocketId
+  } = useContext(SocketContext);
 
   useEffect(() => {
-
     // Fetch patients in waiting room
     fetch('/waitingroom')
       .then(res => res.json())
@@ -20,6 +29,14 @@ function CallRoom() {
         setPatientIds(data.patients)
         setNumPatients(data.count)
       });
+
+    getSocketId();
+
+    // Cleanup 
+    return () => {
+      console.log('clean up call room');
+      disconnectSocket();
+    };
       
   }, []);
 
@@ -28,6 +45,8 @@ function CallRoom() {
   return (
     <>
       <h1>Call Room</h1>
+      <h2>Socket Id: {mySocketId}</h2>
+
       <Card.Group stackable>
         {patients.map(patient => (
           <Card>
