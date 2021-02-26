@@ -14,7 +14,7 @@ app.use('/waitingroom', waitingRoomRoutes);
 function strMapToObj(map) {
   let obj = {};
   for (let [k,v] of map) {
-    obj[k] = v;
+    obj[k.toString()] = v;
   }
   return obj;
 }
@@ -22,7 +22,7 @@ function strMapToObj(map) {
 const users = new Map(); 
 
 // TEST move to seperate router
-app.get('/', (req, res) => {
+app.get('/socket', (_, res) => {
   console.log('requested all connected socket users');
   const usersJson = strMapToObj(users);
   res.json(usersJson);

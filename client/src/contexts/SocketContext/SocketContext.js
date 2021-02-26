@@ -19,11 +19,18 @@ function SocketContextProvider(props) {
   const { userId } = useContext(UserIdContext);
 
   function getSocketId() {
-    socketRef.current = io('/', { query: `userId=${userId}` });
+    return new Promise((resolve, reject) => {
+      socketRef.current = io('/', { query: `userId=${userId}` });
 
-    socketRef.current.on("yourID", (id) => {
-      setMySocketId(id);
-    })
+      socketRef.current.on("yourID", id => {
+        setMySocketId(id);
+        if (id) {
+          resolve(id);
+        } else {
+          reject(new Error('could not get id'));
+        }
+      })
+    });
   }
 
   function disconnectSocket() {

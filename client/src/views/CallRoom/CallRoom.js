@@ -23,23 +23,31 @@ function CallRoom() {
   } = useContext(SocketContext);
 
   useEffect(() => {
+    getSocketId()
+      .then(() => {
+        fetch('/socket')
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+          })
+        .catch(err => {
+          console.log(err);
+        }) 
 
-    // Fetch patients in waiting room
-    fetch('/waitingroom')
-      .then(res => res.json())
-      .then(data => {
-        setPatientIds(data.patients)
-        setNumPatients(data.count)
+        // Fetch patients in waiting room
+        //fetch('/waitingroom')
+        //  .then(res => res.json())
+        //  .then(data => {
+        //    setPatientIds(data.patients)
+        //    setNumPatients(data.count)
+        //  });
       });
-
-    getSocketId();
 
     // Cleanup 
     return () => {
       console.log('clean up call room');
       disconnectSocket();
     };
-      
   }, []);
 
   function callPeer(otherSocketId) {

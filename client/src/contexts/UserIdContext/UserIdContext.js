@@ -9,12 +9,13 @@ export const UserIdContext = createContext();
 
 function SocketContextProvider(props) {
   const [userId, setUserId] = useState('');
+  const id = uuidv4();
+  //setUserId(id);
 
   useEffect(() => {
-    const id = uuidv4();
+    console.log(`user id: ${id}`);
     setUserId(id);
   }, [])
-
 
   return (
     <UserIdContext.Provider value={{ userId }}>
