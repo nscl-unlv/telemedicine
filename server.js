@@ -1,34 +1,28 @@
 const express = require('express');
 const http = require('http');
 const socket = require('socket.io');
+const utils = require('./src/common/utils');
 
 const app = express();
 const server = http.createServer(app);
-const waitingRoomRoutes = require('./src/routes/waiting-room')
 const io = socket(server);
 const port = 8080;
 
 // Routes
+const waitingRoomRoutes = require('./src/routes/waiting-room')
 app.use('/waitingroom', waitingRoomRoutes);
 
-function strMapToObj(map) {
-  let obj = {};
-  for (let [k,v] of map) {
-    obj[k.toString()] = v;
-  }
-  return obj;
-}
 
 const users = new Map(); 
 
-// TEST move to seperate router
+// socket routes
 app.get('/socket', (_, res) => {
   console.log('requested all connected socket users');
-  const usersJson = strMapToObj(users);
+  const usersJson = utils.strMapToObj(users);
   res.json(usersJson);
 });
 
-// socket.io listeners go here
+// socket listeners
 io.on('connection', socket => {
   const socketId = socket.id
   const userId = socket.request._query['userId'];
