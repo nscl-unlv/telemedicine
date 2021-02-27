@@ -13,13 +13,13 @@ const waitingRoomRoutes = require('./src/routes/waiting-room')
 app.use('/waitingroom', waitingRoomRoutes);
 
 
-const users = new Map(); 
+const peers = new Map(); 
 
 // socket routes
 app.get('/socket', (_, res) => {
-  console.log('requested all connected socket users');
-  const usersJson = utils.strMapToObj(users);
-  res.json(usersJson);
+  console.log('requested all connected socket peers');
+  const peersJson = utils.strMapToObj(peers);
+  res.json(peersJson);
 });
 
 // socket listeners
@@ -27,29 +27,30 @@ io.on('connection', socket => {
   const socketId = socket.id
   const userId = socket.request._query['userId'];
 
-  if (!users.get(socket.id)) {
-    users.set(socketId, userId);
+  if (!peers.get(socket.id)) {
+    peers.set(socketId, userId);
     console.log(`Socket Id: ${socketId} - User Id: ${userId} connected`);
   }
 
-  socket.emit("yourID", socketId);
+  socket.emit('yourID', socketId);
 
-  io.sockets.emit("allUsers", users);
+  io.sockets.emit('allPeers', utils.strMapToObj(peers));
 
   socket.on('disconnect', () => {
     console.log(`${socketId} disconnected`)
-    users.delete(socketId);
+    peers.delete(socketId);
+    io.sockets.emit('peerDisconnected', utils.strMapToObj(peers));
   })
 
   //socket.on("callUser", (data) => {
   //  io.to(data.userToCall).emit('hey', {signal: data.signalData, from: data.from});
   //})
 
-  socket.on("callUser", (data) => {
+  socket.on('callUser', (data) => {
     io.to(data.userToCall).emit('hey', {from: data.from});
   })
 
-  socket.on("acceptCall", (data) => {
+  socket.on('acceptCall', (data) => {
     io.to(data.to).emit('callAccepted', data.signal);
   })
 });

@@ -8,14 +8,14 @@ import { UserIdContext } from 'contexts/UserIdContext';
 function WaitingRoom() {
   const { 
     disconnectSocket,
-    getSocketId,
+    initSocket,
     mySocketId
   } = useContext(SocketContext);
   const { userId } = useContext(UserIdContext);
 
   useEffect(() => {
 
-    getSocketId();
+    initSocket();
 
     // Send id to waiting room
     fetch(`/waitingroom/patient/${userId}`, {

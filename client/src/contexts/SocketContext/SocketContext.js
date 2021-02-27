@@ -13,24 +13,27 @@ export const SocketContext = createContext();
 
 function SocketContextProvider(props) {
   const [mySocketId, setMySocketId] = useState('');
+  const [allPeers, setAllPeers] = useState([]);
   const socketRef = useRef();
 
   // TEST
   const { userId } = useContext(UserIdContext);
 
-  function getSocketId() {
-    return new Promise((resolve, reject) => {
-      socketRef.current = io('/', { query: `userId=${userId}` });
+  function initSocket() {
+    socketRef.current = io('/', { query: `userId=${userId}` });
 
-      socketRef.current.on("yourID", id => {
-        setMySocketId(id);
-        if (id) {
-          resolve(id);
-        } else {
-          reject(new Error('could not get id'));
-        }
-      })
-    });
+    socketRef.current.on("yourID", id => {
+      setMySocketId(id);
+    })
+
+    socketRef.current.on('allPeers', peers => {
+      setAllPeers(peers);
+    })
+
+    socketRef.current.on('peerDisconnected', peers => {
+      console.log('peerDisconnected');
+      setAllPeers(peers);
+    })
   }
 
   function disconnectSocket() {
@@ -41,8 +44,9 @@ function SocketContextProvider(props) {
 
   return (
     <SocketContext.Provider value={{ 
+      allPeers,
       disconnectSocket,
-      getSocketId,
+      initSocket,
       mySocketId,
       socketRef
     }}>

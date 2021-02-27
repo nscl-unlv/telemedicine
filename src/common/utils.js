@@ -1,9 +1,12 @@
 function strMapToObj(map) {
-  let obj = {};
+  let arr = []
   for (let [k,v] of map) {
-    obj[k.toString()] = v;
+    let obj = {};
+    obj.sid = k;
+    obj.uid = v;
+    arr.push(obj);
   }
-  return obj;
+  return arr;
 }
 
 module.exports = { strMapToObj }

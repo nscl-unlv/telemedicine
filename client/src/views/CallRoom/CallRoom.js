@@ -7,41 +7,20 @@ import { Button, Card, Image } from 'semantic-ui-react';
 import boyAvator from './images/boy-avatar.png';
 import { SocketContext } from 'contexts/SocketContext';
 
-const patients = [
-  { name: 'pikachu' },
-  { name: 'charmander' }];
 
 function CallRoom() {
-  const [patientIds, setPatientIds] = useState([]);
-  const [numPatients, setNumPatients] = useState(null);
+  const [patientsWaiting, setPatientsWaiting] = useState([]);
   const [callAccepted, setCallAccepted] = useState(false);
   const { 
+    allPeers,
     disconnectSocket,
-    getSocketId,
+    initSocket,
     mySocketId,
     socketRef
   } = useContext(SocketContext);
 
   useEffect(() => {
-    getSocketId()
-      .then(() => {
-        fetch('/socket')
-          .then(res => res.json())
-          .then(data => {
-            console.log(data);
-          })
-        .catch(err => {
-          console.log(err);
-        }) 
-
-        // Fetch patients in waiting room
-        //fetch('/waitingroom')
-        //  .then(res => res.json())
-        //  .then(data => {
-        //    setPatientIds(data.patients)
-        //    setNumPatients(data.count)
-        //  });
-      });
+    initSocket();
 
     // Cleanup 
     return () => {
@@ -49,6 +28,16 @@ function CallRoom() {
       disconnectSocket();
     };
   }, []);
+
+  // update patients upon peer change on socket server
+  useEffect(() => {
+    if (allPeers.length) {
+      // TODO: need to remove all doctors eventually
+      const patientsOnly = allPeers
+                             .filter(peer => peer.sid !== mySocketId);
+      setPatientsWaiting(patientsOnly);
+    }
+  }, [allPeers]);
 
   function callPeer(otherSocketId) {
     //const peer = new Peer({
@@ -84,7 +73,7 @@ function CallRoom() {
       <h2>Socket Id: {mySocketId}</h2>
 
       <Card.Group stackable>
-        {patients.map(patient => (
+        {patientsWaiting.map(patient => (
           <Card>
             <Card.Content>
               <Image
@@ -92,7 +81,7 @@ function CallRoom() {
                 size='mini'
                 src={ boyAvator }
               />
-              <Card.Header>{patient.name}</Card.Header>
+              <Card.Header>{patient.sid}</Card.Header>
             </Card.Content>
             <Card.Content extra>
               <div className='ui two buttons'>
