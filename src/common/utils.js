@@ -1,10 +1,14 @@
+const R = require('ramda');
+
 function strMapToObj(map) {
   let arr = []
   for (let [k,v] of map) {
-    let obj = {};
-    obj.sid = k;
-    obj.uid = v;
-    arr.push(obj);
+    const sid = R.assoc('sid', k, {}); 
+    const uid = R.assoc('uid', v, {}); 
+    const makePeer = R.compose(R.mergeLeft(sid), R.mergeLeft(uid))
+    const newPeer = makePeer({});
+
+    arr = R.append(newPeer, arr);
   }
   return arr;
 }
