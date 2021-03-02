@@ -3,30 +3,42 @@ import React, {
   useEffect, 
   useState } 
 from 'react';
-import { Button, Card, Image } from 'semantic-ui-react';
+import { 
+  Button, 
+  Card, 
+  Image
+} from 'semantic-ui-react';
 import boyAvator from './images/boy-avatar.png';
 import { SocketContext } from 'contexts/SocketContext';
+import {
+  Link
+} from 'react-router-dom';
 
 
 function CallRoom() {
   const [patientsWaiting, setPatientsWaiting] = useState([]);
-  const [callAccepted, setCallAccepted] = useState(false);
+  const [callReady, setCallReady] = useState(false);
   const { 
     allPeers,
     disconnectSocket,
     initSocket,
     mySocketId,
-    socketRef
+    socketAlive,
+    socketRef,
   } = useContext(SocketContext);
 
   useEffect(() => {
-    initSocket();
+    if (!socketAlive) {
+      initSocket();
+    }
 
     // Cleanup 
     return () => {
       console.log('clean up call room');
-      disconnectSocket();
-    };
+      //if(!socketAlive && !keepSocket) {
+      //  disconnectSocket();
+      //}
+    }
   }, []);
 
   // update patients upon peer change on socket server
@@ -58,11 +70,6 @@ function CallRoom() {
 
    socketRef.current.emit("callUser", { userToCall: otherSocketId, 
                                         from: mySocketId });
-
-   socketRef.current.on("callAccepted", signal => {
-      setCallAccepted(true);
-      //peer.signal(signal);
-    });
   }
 
   // TODO: useEffect to fetch patients from database 
@@ -74,7 +81,7 @@ function CallRoom() {
 
       <Card.Group stackable>
         {patientsWaiting.map(patient => (
-          <Card>
+          <Card key={patient.sid}>
             <Card.Content>
               <Image
                 floated='right'
@@ -84,9 +91,13 @@ function CallRoom() {
               <Card.Header>{patient.sid}</Card.Header>
             </Card.Content>
             <Card.Content extra>
-              <div className='ui two buttons'>
-                <Button basic color='green'>Call</Button>
-                <Button basic color='blue'>Profile</Button>
+              <div>
+                <Link to='/chatroom'>
+                  <Button basic color='green'>Call</Button>
+                </Link>
+                <Link to='#'>
+                  <Button basic color='blue'>Profile</Button>
+                </Link>
               </div>
             </Card.Content>
           </Card>

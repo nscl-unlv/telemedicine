@@ -13,12 +13,14 @@ import {
   Sidebar
 } from 'semantic-ui-react';
 import Receiver from 'components/Receiver';
+import { SocketContext } from 'contexts/SocketContext';
 import { StreamContext } from 'contexts/StreamContext';
 import './ChatRoom.css';
 
 function ChatRoom() {
   const [visible, setVisible] = React.useState(false);
   const { streamOff } = useContext(StreamContext);
+  const { disconnectSocket } = useContext(SocketContext);
 
   return (
     <Grid columns={1}>
@@ -60,7 +62,10 @@ function ChatRoom() {
                 <Button 
                   id='end-call'
                   color='red'
-                  onClick={() => streamOff()}
+                  onClick={() => {
+                    streamOff();
+                    disconnectSocket();
+                  }}
                 >
                   <Icon name='stop' />
                   End Call

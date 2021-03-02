@@ -1,30 +1,25 @@
 import React, { 
   createContext, 
+  useContext,
   useEffect, 
   useRef, 
   useState 
 } from 'react';
-import io from "socket.io-client";
+import { SocketContext } from 'contexts/SocketContext';
 import Peer from "simple-peer";
 
 export const StreamContext = createContext();
 
 const StreamContextProvider = props => {
   const [mediaStream, setMediaStream] = useState(null);
-  const [mySocketId, setMySocketId] = useState('');
-  const [callAccepted, setCallAccepted] = useState(false);
+  // const [callAccepted, setCallAccepted] = useState(false);
+  const { mySocketId } = useContext(SocketContext);
 
   const otherStreamRef = useRef();
   const streamRef = useRef();
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io('/');
-
-    socket.current.on("yourID", (id) => {
-      setMySocketId(id);
-    })
-
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices
         .getUserMedia({ 
@@ -80,10 +75,10 @@ const StreamContextProvider = props => {
       }
     });
 
-    socket.current.on("callAccepted", signal => {
-      setCallAccepted(true);
-      peer.signal(signal);
-    })
+    //socket.current.on("callAccepted", signal => {
+    //  setCallAccepted(true);
+    //  peer.signal(signal);
+    //})
 
   }
 
@@ -92,7 +87,6 @@ const StreamContextProvider = props => {
       mediaStream, 
       streamRef, 
       streamOff,
-      mySocketId
     }}>
       {props.children}
     </StreamContext.Provider>

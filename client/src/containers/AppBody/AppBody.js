@@ -65,15 +65,15 @@ function AppBody() {
                   <Switch>
 
                     <UserIdContextProvider>
-                      <Route path='/home'>
-                        <ShowHome />
-                      </Route>
-
-                      <Route path='/checkin'>
-                        <CheckIn />
-                      </Route>
-
                       <SocketContextProvider>
+                        <Route path='/home'>
+                          <ShowHome />
+                        </Route>
+
+                        <Route path='/checkin'>
+                          <CheckIn />
+                        </Route>
+
                         <Route path='/callroom'>
                           <CallRoom />
                         </Route>
