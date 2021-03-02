@@ -42,13 +42,14 @@ io.on('connection', socket => {
     io.sockets.emit('peerDisconnected', utils.strMapToObj(peers));
   })
 
-  //socket.on("callUser", (data) => {
-  //  io.to(data.userToCall).emit('hey', {signal: data.signalData, from: data.from});
-  //})
-
-  socket.on('callUser', (data) => {
-    io.to(data.userToCall).emit('hey', {from: data.from});
+  socket.on("callUser", (data) => {
+    console.log(`calling ${data.userToCall}`);
+    io.to(data.userToCall).emit('hey', {signal: data.signalData, from: data.from});
   })
+
+  //socket.on('callUser', (data) => {
+  //  io.to(data.userToCall).emit('hey', {from: data.from});
+  //})
 
   socket.on('acceptCall', (data) => {
     io.to(data.to).emit('callAccepted', data.signal);

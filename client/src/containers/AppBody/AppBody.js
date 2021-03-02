@@ -66,27 +66,29 @@ function AppBody() {
 
                     <UserIdContextProvider>
                       <SocketContextProvider>
-                        <Route path='/home'>
-                          <ShowHome />
-                        </Route>
+                        <StreamContextProvider>
 
-                        <Route path='/checkin'>
-                          <CheckIn />
-                        </Route>
+                          <Route path='/home'>
+                            <ShowHome />
+                          </Route>
 
-                        <Route path='/callroom'>
-                          <CallRoom />
-                        </Route>
+                          <Route path='/checkin'>
+                            <CheckIn />
+                          </Route>
 
-                        <Route path='/waitingroom'>
-                          <WaitingRoom />
-                        </Route>
+                          <Route path='/callroom'>
+                            <CallRoom />
+                          </Route>
 
-                        <Route path='/chatroom'>
-                          <StreamContextProvider>
-                            <ChatRoom />
-                          </StreamContextProvider>
-                        </Route>
+                          <Route path='/waitingroom'>
+                            <WaitingRoom />
+                          </Route>
+
+                          <Route path='/chatroom'>
+                              <ChatRoom />
+                          </Route>
+
+                        </StreamContextProvider>
                       </SocketContextProvider>
                     </UserIdContextProvider>
 

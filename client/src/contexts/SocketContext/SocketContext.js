@@ -15,6 +15,11 @@ function SocketContextProvider(props) {
   const [mySocketId, setMySocketId] = useState('');
   const [allPeers, setAllPeers] = useState([]);
   const [socketAlive, setSocketAlive] = useState(false);
+  const [receivingCall, setReceivingCall] = useState(false);
+
+  const [callAccepted, setCallAccepted] = useState(false);
+  const [callerSignal, setCallerSignal] = useState();
+  const [callerSid, setCallerSid] = useState("");
 
   const socketRef = useRef();
 
@@ -39,6 +44,12 @@ function SocketContextProvider(props) {
         console.log('peerDisconnected');
         setAllPeers(peers);
       })
+
+      socketRef.current.on("hey", (data) => {
+        setReceivingCall(true);
+        setCallerSid(data.from);
+        setCallerSignal(data.signal);
+      })
     } else {
       console.log('socket init failed. already connected');
     }
@@ -58,9 +69,12 @@ function SocketContextProvider(props) {
   return (
     <SocketContext.Provider value={{ 
       allPeers,
+      callerSignal,
       disconnectSocket,
       initSocket,
       mySocketId,
+      receivingCall,
+      setCallAccepted,
       socketAlive,
       socketRef
     }}>

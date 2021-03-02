@@ -1,7 +1,6 @@
 import React, { 
   createContext, 
   useContext,
-  useEffect, 
   useRef, 
   useState 
 } from 'react';
@@ -12,29 +11,65 @@ export const StreamContext = createContext();
 
 const StreamContextProvider = props => {
   const [mediaStream, setMediaStream] = useState(null);
-  // const [callAccepted, setCallAccepted] = useState(false);
-  const { mySocketId } = useContext(SocketContext);
+  const { 
+    mySocketId,
+    socketRef,
+    setCallAccepted
+  } = useContext(SocketContext);
 
   const otherStreamRef = useRef();
   const streamRef = useRef();
-  const socket = useRef();
 
-  useEffect(() => {
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ 
-          video: {
-            facingMode:'user'
-          }, 
-          audio: false 
-        }).then(stream => {
-          setMediaStream(stream);
-          if (streamRef.current) {
-            streamRef.current.srcObject = stream;
-          }
-        });
-    } 
-  }, []);
+  function initStream() {
+    return new Promise((resolve, reject) => {
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia({ 
+            video: {
+              facingMode:'user'
+            }, 
+            audio: false 
+          }).then(stream => {
+            setMediaStream(stream);
+            if (streamRef.current) {
+              console.log('initiating stream...');
+              streamRef.current.srcObject = stream;
+              resolve('done');
+            }
+          });
+      } else {
+        reject(new Error('stream error'));
+      } 
+    })
+  }
+
+  function callPeer(otherSocketId) {
+    console.log('calling patient...');
+
+    const peer = new Peer({
+      initiator: true,
+      trickle: false,
+      stream: streamRef.current.srcObject
+    });
+
+    peer.on("signal", data => {
+      socketRef.current.emit("callUser", { 
+        userToCall: otherSocketId, 
+        signalData: data, 
+        from: mySocketId })
+    })
+
+    peer.on("stream", stream => {
+      if (otherStreamRef.current) {
+        otherStreamRef.current.srcObject = stream;
+      }
+    });
+
+    socketRef.current.on("callAccepted", signal => {
+      setCallAccepted(true);
+      peer.signal(signal);
+    })
+  }
 
   function streamOff() {
     if (streamRef.current) {
@@ -55,35 +90,11 @@ const StreamContextProvider = props => {
     }
   }
 
-  function callPeer(id) {
-    const peer = new Peer({
-      initiator: true,
-      trickle: false,
-      stream: streamRef.current.srcObject
-    });
-
-    peer.on("signal", data => {
-      socket.current.emit("callUser", { 
-        userToCall: id, 
-        signalData: data, 
-        from: mySocketId })
-    })
-
-    peer.on("stream", stream => {
-      if (otherStreamRef.current) {
-        otherStreamRef.current.srcObject = stream;
-      }
-    });
-
-    //socket.current.on("callAccepted", signal => {
-    //  setCallAccepted(true);
-    //  peer.signal(signal);
-    //})
-
-  }
 
   return (
     <StreamContext.Provider value={{ 
+      callPeer,
+      initStream,
       mediaStream, 
       streamRef, 
       streamOff,

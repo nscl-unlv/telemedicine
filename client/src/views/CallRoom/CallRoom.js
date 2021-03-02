@@ -10,6 +10,7 @@ import {
 } from 'semantic-ui-react';
 import boyAvator from './images/boy-avatar.png';
 import { SocketContext } from 'contexts/SocketContext';
+import { StreamContext } from 'contexts/StreamContext';
 import {
   Link
 } from 'react-router-dom';
@@ -17,15 +18,17 @@ import {
 
 function CallRoom() {
   const [patientsWaiting, setPatientsWaiting] = useState([]);
-  const [callReady, setCallReady] = useState(false);
   const { 
     allPeers,
     disconnectSocket,
     initSocket,
     mySocketId,
-    socketAlive,
-    socketRef,
+    socketAlive
   } = useContext(SocketContext);
+  const { 
+    initStream,
+    callPeer 
+  } = useContext(StreamContext);
 
   useEffect(() => {
     if (!socketAlive) {
@@ -51,27 +54,6 @@ function CallRoom() {
     }
   }, [allPeers]);
 
-  function callPeer(otherSocketId) {
-    //const peer = new Peer({
-    //  initiator: true,
-    //  trickle: false,
-    //  stream: streamRef.current.srcObject
-    //});
-
-    //peer.on("signal", data => {
-    //  socket.current.emit("callUser", { userToCall: id, signalData: data, from: yourID })
-    //})
-
-    //peer.on("stream", stream => {
-    //  if (partnerVideo.current) {
-    //    partnerVideo.current.srcObject = stream;
-    //  }
-    //});
-
-   socketRef.current.emit("callUser", { userToCall: otherSocketId, 
-                                        from: mySocketId });
-  }
-
   // TODO: useEffect to fetch patients from database 
 
   return (
@@ -93,7 +75,17 @@ function CallRoom() {
             <Card.Content extra>
               <div>
                 <Link to='/chatroom'>
-                  <Button basic color='green'>Call</Button>
+                  <Button 
+                    basic 
+                    color='green'
+                    onClick={() => {
+                      // start video before calling
+                      initStream()
+                        .then(() => {
+                          callPeer(patient.sid);
+                        });
+                    }}
+                  >Call</Button>
                 </Link>
                 <Link to='#'>
                   <Button basic color='blue'>Profile</Button>

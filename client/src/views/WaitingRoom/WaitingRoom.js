@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { SocketContext } from 'contexts/SocketContext';
+import { Button, Card } from 'semantic-ui-react';
 
 // TEST
 import { UserIdContext } from 'contexts/UserIdContext';
@@ -9,7 +10,8 @@ function WaitingRoom() {
   const { 
     disconnectSocket,
     initSocket,
-    mySocketId
+    mySocketId,
+    receivingCall
   } = useContext(SocketContext);
   const { userId } = useContext(UserIdContext);
 
@@ -45,10 +47,35 @@ function WaitingRoom() {
     };
   }, []);
 
+  function ShowCaller() {
+    if (receivingCall) {
+      return (
+        <Card>
+          <Card.Content>
+            <Card.Header>Receiving a Call</Card.Header>
+            <Card.Description>
+            </Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            <div className='ui two buttons'>
+              <Button basic color='green'>
+                Accept
+              </Button>
+              <Button basic color='red'>
+                Ignore
+              </Button>
+            </div>
+          </Card.Content>
+        </Card>
+      );
+    }
+  }
+
   return (
     <>
       <h1>Waiting Room</h1>
       <h2>socket id: {mySocketId}</h2>
+      {ShowCaller()}
     </>
   );
 }
