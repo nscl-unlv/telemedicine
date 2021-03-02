@@ -11,7 +11,8 @@ function WaitingRoom() {
     disconnectSocket,
     initSocket,
     mySocketId,
-    receivingCall
+    receivingCall,
+    setReceivingCall
   } = useContext(SocketContext);
   const { userId } = useContext(UserIdContext);
 
@@ -47,9 +48,9 @@ function WaitingRoom() {
     };
   }, []);
 
-  function ShowCaller() {
+  function CallNotice() {
     if (receivingCall) {
-      return (
+      return ( 
         <Card>
           <Card.Content>
             <Card.Header>Receiving a Call</Card.Header>
@@ -61,13 +62,19 @@ function WaitingRoom() {
               <Button basic color='green'>
                 Accept
               </Button>
-              <Button basic color='red'>
+              <Button 
+                basic 
+                color='red'
+                onClick={() => setReceivingCall(false)}
+              >
                 Ignore
               </Button>
             </div>
           </Card.Content>
         </Card>
       );
+    } else {
+      return (<></>);
     }
   }
 
@@ -75,7 +82,7 @@ function WaitingRoom() {
     <>
       <h1>Waiting Room</h1>
       <h2>socket id: {mySocketId}</h2>
-      {ShowCaller()}
+      {CallNotice()}
     </>
   );
 }
