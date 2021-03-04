@@ -20,7 +20,7 @@ const StreamContextProvider = props => {
   } = useContext(SocketContext);
 
   const otherStreamRef = useRef();
-  const streamRef = useRef();
+  const myStreamRef = useRef();
 
   function initStream() {
     return new Promise((resolve, reject) => {
@@ -33,9 +33,9 @@ const StreamContextProvider = props => {
             audio: false 
           }).then(stream => {
             setMediaStream(stream);
-            if (streamRef.current) {
+            if (myStreamRef.current) {
               console.log('initiating stream...');
-              streamRef.current.srcObject = stream;
+              myStreamRef.current.srcObject = stream;
               resolve('done');
             }
           });
@@ -51,7 +51,7 @@ const StreamContextProvider = props => {
     const peer = new Peer({
       initiator: true,
       trickle: false,
-      stream: streamRef.current.srcObject
+      stream: myStreamRef.current.srcObject
     });
 
     peer.on("signal", data => {
@@ -80,7 +80,7 @@ const StreamContextProvider = props => {
     const peer = new Peer({
       initiator: false,
       trickle: false,
-      stream: streamRef.current.srcObject,
+      stream: myStreamRef.current.srcObject,
     });
 
     peer.on("signal", data => {
@@ -96,14 +96,14 @@ const StreamContextProvider = props => {
   }
 
   function streamOff() {
-    if (streamRef.current) {
+    if (myStreamRef.current) {
       console.log('turning off streaming...');
       // turn off reference stream
-      streamRef.current.srcObject.getTracks().forEach(track => {
+      myStreamRef.current.srcObject.getTracks().forEach(track => {
         track.stop();
         track.enabled = false;
       });
-      streamRef.current = null;
+      myStreamRef.current = null;
 
       // turn off actual stream
       mediaStream.getTracks().forEach(track => {
@@ -122,7 +122,7 @@ const StreamContextProvider = props => {
       initStream,
       mediaStream, 
       otherStreamRef,
-      streamRef, 
+      myStreamRef, 
       streamOff,
     }}>
       {props.children}
