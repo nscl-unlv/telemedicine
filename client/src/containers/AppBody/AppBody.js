@@ -7,6 +7,12 @@ import HomeDoctor from 'views/HomeDoctor';
 import HomePatient from 'views/HomePatient';
 import NavMenu from 'components/NavMenu';
 
+import SocketContextProvider from 'contexts/SocketContext';
+import StreamContextProvider from 'contexts/StreamContext';
+
+// TEST
+import UserIdContextProvider from 'contexts/UserIdContext';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -57,25 +63,35 @@ function AppBody() {
               <Sidebar.Pusher>
                 <Segment basic>
                   <Switch>
-                    <Route path='/home'>
-                      <ShowHome />
-                    </Route>
 
-                    <Route path='/checkin'>
-                      <CheckIn />
-                    </Route>
+                    <UserIdContextProvider>
+                      <SocketContextProvider>
+                        <StreamContextProvider>
 
-                    <Route path='/waitingroom'>
-                      <WaitingRoom />
-                    </Route>
+                          <Route path='/home'>
+                            <ShowHome />
+                          </Route>
 
-                    <Route path='/callroom'>
-                      <CallRoom />
-                    </Route>
+                          <Route path='/checkin'>
+                            <CheckIn />
+                          </Route>
 
-                    <Route path='/chatroom'>
-                      <ChatRoom />
-                    </Route>
+                          <Route path='/callroom'>
+                            <CallRoom />
+                          </Route>
+
+                          <Route path='/waitingroom'>
+                            <WaitingRoom />
+                          </Route>
+
+                          <Route path='/chatroom'>
+                              <ChatRoom />
+                          </Route>
+
+                        </StreamContextProvider>
+                      </SocketContextProvider>
+                    </UserIdContextProvider>
+
                   </Switch>
                 </Segment>
               </Sidebar.Pusher>

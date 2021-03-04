@@ -1,34 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Caller from 'components/Caller';
 import ChatRoomMenu from 'components/ChatRoomMenu';
 import { 
+  Button,
   Checkbox,
   Grid, 
   Header,
+  Icon,
   Image,
   Menu,
   Segment,
   Sidebar
 } from 'semantic-ui-react';
 import Receiver from 'components/Receiver';
-import StreamContextProvider from 'contexts/StreamContext';
-import styled from 'styled-components';
-
-const VideoContainer = styled.div`
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-`;
-
-const CallerPosition = styled.div`
-  position: absolute;
-  width: 25%;
-  top: 0;
-  right: 0;
-`;
+import { SocketContext } from 'contexts/SocketContext';
+import { StreamContext } from 'contexts/StreamContext';
+import './ChatRoom.css';
 
 function ChatRoom() {
   const [visible, setVisible] = React.useState(false);
+  const { streamOff } = useContext(StreamContext);
+  const { disconnectSocket } = useContext(SocketContext);
 
   return (
     <Grid columns={1}>
@@ -38,6 +30,7 @@ function ChatRoom() {
           label={{ children: <code>visible</code> }}
           onChange={(_, data) => setVisible(data.checked)}
         />
+
       </Grid.Column>
 
       <Grid.Column>
@@ -59,16 +52,25 @@ function ChatRoom() {
             <Segment basic>
               <Header as='h3'>Chat Room View</Header>
 
-              <VideoContainer>
-                <StreamContextProvider>
-                  <Image src='https://cdn.ndtv.com/tech/images/gadgets/pikachu_hi_pokemon.jpg?output-quality=80&output-format=webp' />
-                  {/* <Receiver /> */}
+              <div id="video-container">
+                {/* <Image src='https://cdn.ndtv.com/tech/images/gadgets/pikachu_hi_pokemon.jpg?output-quality=80&output-format=webp' /> */}
+                <Receiver />
 
-                  <CallerPosition>
-                    <Caller />
-                  </CallerPosition>
-                </StreamContextProvider>
-              </VideoContainer>
+                <div id="caller-position">
+                  <Caller />
+                </div>
+                <Button 
+                  id='end-call'
+                  color='red'
+                  onClick={() => {
+                    streamOff();
+                    disconnectSocket();
+                  }}
+                >
+                  <Icon name='stop' />
+                  End Call
+                </Button>
+              </div>
 
             </Segment>
           </Sidebar.Pusher>
