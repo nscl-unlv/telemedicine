@@ -3,6 +3,7 @@ import { SocketContext } from 'contexts/SocketContext';
 import { Button, Card } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
+import { StreamContext } from 'contexts/StreamContext';
 // TEST
 import { UserIdContext } from 'contexts/UserIdContext';
 
@@ -15,6 +16,11 @@ function WaitingRoom() {
     receivingCall,
     setReceivingCall
   } = useContext(SocketContext);
+  const { 
+    initStream, 
+    acceptCall 
+  } = useContext(StreamContext);
+  // TEST
   const { userId } = useContext(UserIdContext);
 
   useEffect(() => {
@@ -64,7 +70,13 @@ function WaitingRoom() {
                 <Button 
                   basic 
                   color='green'
-                  onClick={() => setReceivingCall(false)}
+                  onClick={() => {
+                    setReceivingCall(false)
+                    initStream()
+                      .then(() => {
+                        acceptCall();
+                      });
+                  }}
                 >
                   Accept
                 </Button>

@@ -53,8 +53,8 @@ function ChatRoom() {
               <Header as='h3'>Chat Room View</Header>
 
               <div id="video-container">
-                <Image src='https://cdn.ndtv.com/tech/images/gadgets/pikachu_hi_pokemon.jpg?output-quality=80&output-format=webp' />
-                {/* <Receiver /> */}
+                {/* <Image src='https://cdn.ndtv.com/tech/images/gadgets/pikachu_hi_pokemon.jpg?output-quality=80&output-format=webp' /> */}
+                <Receiver />
 
                 <div id="caller-position">
                   <Caller />

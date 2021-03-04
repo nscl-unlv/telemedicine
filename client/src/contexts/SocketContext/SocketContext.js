@@ -62,6 +62,7 @@ function SocketContextProvider(props) {
       socketRef.current = null;
       setSocketAlive(false);
       setReceivingCall(false);
+      setCallAccepted(false);
     } else {
       console.log('disconnect attempt. socket already disconnected.');
     }
@@ -70,6 +71,8 @@ function SocketContextProvider(props) {
   return (
     <SocketContext.Provider value={{ 
       allPeers,
+      callAccepted,
+      callerSid,
       callerSignal,
       disconnectSocket,
       initSocket,

@@ -12,6 +12,8 @@ export const StreamContext = createContext();
 const StreamContextProvider = props => {
   const [mediaStream, setMediaStream] = useState(null);
   const { 
+    callerSid,
+    callerSignal,
     mySocketId,
     socketRef,
     setCallAccepted
@@ -71,6 +73,28 @@ const StreamContextProvider = props => {
     })
   }
 
+  function acceptCall() {
+    console.log('call accepted.');
+    setCallAccepted(true);
+
+    const peer = new Peer({
+      initiator: false,
+      trickle: false,
+      stream: streamRef.current.srcObject,
+    });
+
+    peer.on("signal", data => {
+      socketRef.current.emit("acceptCall", 
+        { signal: data, to: callerSid })
+    });
+
+    peer.on("stream", stream => {
+      otherStreamRef.current.srcObject = stream;
+    });
+
+    peer.signal(callerSignal);
+  }
+
   function streamOff() {
     if (streamRef.current) {
       console.log('turning off streaming...');
@@ -93,9 +117,11 @@ const StreamContextProvider = props => {
 
   return (
     <StreamContext.Provider value={{ 
+      acceptCall,
       callPeer,
       initStream,
       mediaStream, 
+      otherStreamRef,
       streamRef, 
       streamOff,
     }}>
