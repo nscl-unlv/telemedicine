@@ -11,9 +11,7 @@ import {
 import boyAvator from './images/boy-avatar.png';
 import { SocketContext } from 'contexts/SocketContext';
 import { StreamContext } from 'contexts/StreamContext';
-import {
-  Link
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 function CallRoom() {

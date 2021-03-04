@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { SocketContext } from 'contexts/SocketContext';
 import { Button, Card } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 // TEST
 import { UserIdContext } from 'contexts/UserIdContext';
@@ -58,10 +59,17 @@ function WaitingRoom() {
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
-            <div className='ui two buttons'>
-              <Button basic color='green'>
-                Accept
-              </Button>
+            <div className='ui'>
+              <Link to='/chatroom'>
+                <Button 
+                  basic 
+                  color='green'
+                  onClick={() => setReceivingCall(false)}
+                >
+                  Accept
+                </Button>
+              </Link>
+              
               <Button 
                 basic 
                 color='red'
