@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import AppHeader from 'containers/AppHeader';
 import AppBody from 'containers/AppBody';
 import NavMenuContextProvider from 'contexts/NavMenuContext';
+import { Button } from 'semantic-ui-react';
+
+// TEST
+import UserIdContextProvider from 'contexts/UserIdContext';
 
 import { 
   Container, 
@@ -10,14 +14,39 @@ import {
 } from 'semantic-ui-react';
 
 function App() {
+  // TEST: control doctor/patient ui
+  const [isDoctor, setIsDoctor] = useState(false);
+
   return (
     <div className="App">
       <Container>
         <Grid style={{height: '100vh'}}>
-          <NavMenuContextProvider>
-            <AppHeader />
-            <AppBody />
-          </NavMenuContextProvider>
+          <UserIdContextProvider>
+            <NavMenuContextProvider>
+              <AppHeader />
+
+              <Grid.Row>
+                <Grid.Column textAlign='center'>
+                  <Button 
+                    basic 
+                    color='red'
+                    onClick={() => setIsDoctor(true)}
+                  >
+                    Doctor
+                  </Button>
+                  <Button 
+                    basic 
+                    color='blue'
+                    onClick={() => setIsDoctor(false)}
+                  >
+                    Patient
+                  </Button>
+                </Grid.Column>
+              </Grid.Row>
+              
+              <AppBody />
+            </NavMenuContextProvider>
+          </UserIdContextProvider>
         </Grid>
       </Container>
     </div>

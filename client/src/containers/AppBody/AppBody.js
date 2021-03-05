@@ -10,51 +10,22 @@ import NavMenu from 'components/NavMenu';
 import SocketContextProvider from 'contexts/SocketContext';
 import StreamContextProvider from 'contexts/StreamContext';
 
-// TEST
-import UserIdContextProvider from 'contexts/UserIdContext';
-
 import {
   BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom';
 import { 
-  Button,
   Grid,
   Segment,
   Sidebar
 } from 'semantic-ui-react';
 
 function AppBody() {
-  // TEST
-  const [isDoctor, setIsDoctor] = useState(true);
-
-  function ShowHome() {
-    if (isDoctor) {
-      return <HomeDoctor />;
-    } else {
-      return <HomePatient />;
-    }
-  }
-
   return (
     <>
       <Grid.Row style={{height: '95%'}}>
         <Grid.Column width={16}>
-          <Button 
-            basic 
-            color='red'
-            onClick={() => setIsDoctor(true)}
-          >
-            Doctor
-          </Button>
-          <Button 
-            basic 
-            color='blue'
-            onClick={() => setIsDoctor(false)}
-          >
-            Patient
-          </Button>
 
           <Router>
             <Sidebar.Pushable>
@@ -64,12 +35,11 @@ function AppBody() {
                 <Segment basic>
                   <Switch>
 
-                    <UserIdContextProvider>
                       <SocketContextProvider>
                         <StreamContextProvider>
 
                           <Route path='/home'>
-                            <ShowHome />
+                            <HomeDoctor />
                           </Route>
 
                           <Route path='/checkin'>
@@ -90,7 +60,6 @@ function AppBody() {
 
                         </StreamContextProvider>
                       </SocketContextProvider>
-                    </UserIdContextProvider>
 
                   </Switch>
                 </Segment>

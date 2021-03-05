@@ -6,6 +6,7 @@ import {
 } from 'semantic-ui-react';
 import { NavMenuContext } from 'contexts/NavMenuContext';
 
+
 function AppHeader() {
   const { setNavMenuVisible } = useContext(NavMenuContext);
 
@@ -20,9 +21,10 @@ function AppHeader() {
           />
         </Grid.Column>
 
-        <Grid.Column width={14}>
+        <Grid.Column width={14} textAlign='center'>
           <Header as='h2'>Telemedicine Application</Header>
         </Grid.Column>
+
       </Grid.Row>
     </>
   );
