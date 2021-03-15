@@ -9,10 +9,8 @@ const Video = styled.video`
 `;
 
 function Receiver() {
-
   const { callAccepted } = useContext(SocketContext);
   const { otherStreamRef } = useContext(StreamContext);
-
 
   let PartnerVideo;
   if (callAccepted) {

@@ -1,96 +1,57 @@
-import React, { useState } from 'react';
-import ChatRoom from 'views/ChatRoom';
-import CheckIn from 'views/CheckIn';
-import WaitingRoom from 'views/WaitingRoom';
-import CallRoom from 'views/CallRoom';
-import HomeDoctor from 'views/HomeDoctor';
-import HomePatient from 'views/HomePatient';
-import NavMenu from 'components/NavMenu';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+} from 'react-router-dom';
+import {
+  Grid,
+  Segment,
+  Sidebar,
+} from 'semantic-ui-react';
 
+// Context Providers
 import SocketContextProvider from 'contexts/SocketContext';
 import StreamContextProvider from 'contexts/StreamContext';
 
-// TEST
-import UserIdContextProvider from 'contexts/UserIdContext';
+// Componenets
+import NavMenuDoctor from 'components/NavMenuDoctor';
+import NavMenuPatient from 'components/NavMenuPatient';
+import RoutesDoctor from 'views/RoutesDoctor';
+import RoutesPatient from 'views/RoutesPatient';
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from 'react-router-dom';
-import { 
-  Button,
-  Grid,
-  Segment,
-  Sidebar
-} from 'semantic-ui-react';
-
-function AppBody() {
-  // TEST
-  const [isDoctor, setIsDoctor] = useState(true);
-
-  function ShowHome() {
+function AppBody({ isDoctor }) {
+  function navMenu() {
     if (isDoctor) {
-      return <HomeDoctor />;
-    } else {
-      return <HomePatient />;
+      return <NavMenuDoctor />;
     }
+    return <NavMenuPatient />;
+  }
+
+  function routes() {
+    if (isDoctor) {
+      return <RoutesDoctor />;
+    }
+    return <RoutesPatient />;
   }
 
   return (
     <>
-      <Grid.Row style={{height: '95%'}}>
+      <Grid.Row style={{ height: '95%' }}>
         <Grid.Column width={16}>
-          <Button 
-            basic 
-            color='red'
-            onClick={() => setIsDoctor(true)}
-          >
-            Doctor
-          </Button>
-          <Button 
-            basic 
-            color='blue'
-            onClick={() => setIsDoctor(false)}
-          >
-            Patient
-          </Button>
 
           <Router>
             <Sidebar.Pushable>
-              <NavMenu />
+              {navMenu()}
 
               <Sidebar.Pusher>
                 <Segment basic>
                   <Switch>
 
-                    <UserIdContextProvider>
-                      <SocketContextProvider>
-                        <StreamContextProvider>
-
-                          <Route path='/home'>
-                            <ShowHome />
-                          </Route>
-
-                          <Route path='/checkin'>
-                            <CheckIn />
-                          </Route>
-
-                          <Route path='/callroom'>
-                            <CallRoom />
-                          </Route>
-
-                          <Route path='/waitingroom'>
-                            <WaitingRoom />
-                          </Route>
-
-                          <Route path='/chatroom'>
-                              <ChatRoom />
-                          </Route>
-
-                        </StreamContextProvider>
-                      </SocketContextProvider>
-                    </UserIdContextProvider>
+                    <SocketContextProvider>
+                      <StreamContextProvider>
+                        {routes()}
+                      </StreamContextProvider>
+                    </SocketContextProvider>
 
                   </Switch>
                 </Segment>

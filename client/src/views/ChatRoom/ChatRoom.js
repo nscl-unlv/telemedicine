@@ -1,16 +1,15 @@
 import React, { useContext } from 'react';
 import Caller from 'components/Caller';
 import ChatRoomMenu from 'components/ChatRoomMenu';
-import { 
+import {
   Button,
   Checkbox,
-  Grid, 
+  Grid,
   Header,
   Icon,
-  Image,
   Menu,
   Segment,
-  Sidebar
+  Sidebar,
 } from 'semantic-ui-react';
 import Receiver from 'components/Receiver';
 import { SocketContext } from 'contexts/SocketContext';
@@ -37,20 +36,20 @@ function ChatRoom() {
         <Sidebar.Pushable as={Segment}>
           <Sidebar
             as={Menu}
-            animation='overlay'
-            direction='right'
-            icon='labeled'
+            animation="overlay"
+            direction="right"
+            icon="labeled"
             onHide={() => setVisible(false)}
             vertical
             visible={visible}
-            width='wide'
+            width="wide"
           >
             <ChatRoomMenu />
           </Sidebar>
 
           <Sidebar.Pusher>
             <Segment basic>
-              <Header as='h3'>Chat Room View</Header>
+              <Header as="h3">Chat Room View</Header>
 
               <div id="video-container">
                 {/* <Image src='https://cdn.ndtv.com/tech/images/gadgets/pikachu_hi_pokemon.jpg?output-quality=80&output-format=webp' /> */}
@@ -59,15 +58,15 @@ function ChatRoom() {
                 <div id="caller-position">
                   <Caller />
                 </div>
-                <Button 
-                  id='end-call'
-                  color='red'
+                <Button
+                  id="end-call"
+                  color="red"
                   onClick={() => {
                     streamOff();
                     disconnectSocket();
                   }}
                 >
-                  <Icon name='stop' />
+                  <Icon name="stop" />
                   End Call
                 </Button>
               </div>

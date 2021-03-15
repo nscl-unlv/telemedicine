@@ -1,22 +1,22 @@
-import React, { 
-  createContext, 
+import React, {
+  createContext,
   useContext,
-  useRef, 
-  useState 
+  useRef,
+  useState,
 } from 'react';
 import { SocketContext } from 'contexts/SocketContext';
-import Peer from "simple-peer";
+import Peer from 'simple-peer';
 
 export const StreamContext = createContext();
 
-const StreamContextProvider = props => {
+const StreamContextProvider = ({ children }) => {
   const [mediaStream, setMediaStream] = useState(null);
-  const { 
+  const {
     callerSid,
     callerSignal,
     mySocketId,
     socketRef,
-    setCallAccepted
+    setCallAccepted,
   } = useContext(SocketContext);
 
   const otherStreamRef = useRef();
@@ -26,12 +26,12 @@ const StreamContextProvider = props => {
     return new Promise((resolve, reject) => {
       if (navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices
-          .getUserMedia({ 
+          .getUserMedia({
             video: {
-              facingMode:'user'
-            }, 
-            audio: false 
-          }).then(stream => {
+              facingMode: 'user',
+            },
+            audio: false,
+          }).then((stream) => {
             setMediaStream(stream);
             if (myStreamRef.current) {
               console.log('initiating stream...');
@@ -41,8 +41,8 @@ const StreamContextProvider = props => {
           });
       } else {
         reject(new Error('stream error'));
-      } 
-    })
+      }
+    });
   }
 
   function callPeer(otherSocketId) {
@@ -51,26 +51,27 @@ const StreamContextProvider = props => {
     const peer = new Peer({
       initiator: true,
       trickle: false,
-      stream: myStreamRef.current.srcObject
+      stream: myStreamRef.current.srcObject,
     });
 
-    peer.on("signal", data => {
-      socketRef.current.emit("callUser", { 
-        userToCall: otherSocketId, 
-        signalData: data, 
-        from: mySocketId })
-    })
+    peer.on('signal', (data) => {
+      socketRef.current.emit('callUser', {
+        userToCall: otherSocketId,
+        signalData: data,
+        from: mySocketId,
+      });
+    });
 
-    peer.on("stream", stream => {
+    peer.on('stream', (stream) => {
       if (otherStreamRef.current) {
         otherStreamRef.current.srcObject = stream;
       }
     });
 
-    socketRef.current.on("callAccepted", signal => {
+    socketRef.current.on('callAccepted', (signal) => {
       setCallAccepted(true);
       peer.signal(signal);
-    })
+    });
   }
 
   function acceptCall() {
@@ -83,12 +84,12 @@ const StreamContextProvider = props => {
       stream: myStreamRef.current.srcObject,
     });
 
-    peer.on("signal", data => {
-      socketRef.current.emit("acceptCall", 
-        { signal: data, to: callerSid })
+    peer.on('signal', (data) => {
+      socketRef.current.emit('acceptCall',
+        { signal: data, to: callerSid });
     });
 
-    peer.on("stream", stream => {
+    peer.on('stream', (stream) => {
       otherStreamRef.current.srcObject = stream;
     });
 
@@ -99,14 +100,14 @@ const StreamContextProvider = props => {
     if (myStreamRef.current) {
       console.log('turning off streaming...');
       // turn off reference stream
-      myStreamRef.current.srcObject.getTracks().forEach(track => {
+      myStreamRef.current.srcObject.getTracks().forEach((track) => {
         track.stop();
         track.enabled = false;
       });
       myStreamRef.current = null;
 
       // turn off actual stream
-      mediaStream.getTracks().forEach(track => {
+      mediaStream.getTracks().forEach((track) => {
         track.stop();
         track.enabled = false;
       });
@@ -114,18 +115,18 @@ const StreamContextProvider = props => {
     }
   }
 
-
   return (
-    <StreamContext.Provider value={{ 
+    <StreamContext.Provider value={{
       acceptCall,
       callPeer,
       initStream,
-      mediaStream, 
+      mediaStream,
       otherStreamRef,
-      myStreamRef, 
+      myStreamRef,
       streamOff,
-    }}>
-      {props.children}
+    }}
+    >
+      {children}
     </StreamContext.Provider>
   );
 };

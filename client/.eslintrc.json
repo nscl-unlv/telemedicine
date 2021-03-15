@@ -1,0 +1,34 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "ignorePatterns": ["serviceWorkerRegistration.js"],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+      "import/no-unresolved": "off",
+      "import/no-extraneous-dependencies": "off",
+      "jsx-a11y/anchor-is-valid": "off",
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "react/prop-types": "off",
+      "no-param-reassign": "off",
+      "no-unused-vars": "warn"
+
+    },
+    "settings": {
+      "import/resolver": "webpack"
+    }
+}

@@ -7,7 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 import { NavMenuContext } from 'contexts/NavMenuContext';
 
-function NavMenu() {
+function NavMenuDoctor() {
   const {
     navMenuVisible,
     setNavMenuVisible,
@@ -39,28 +39,6 @@ function NavMenu() {
 
         <Menu.Item>
           <Link
-            to="/checkin"
-            onClick={() => setNavMenuVisible(false)}
-          >
-            <Icon name="check" size="big" />
-            <br />
-            Check-In
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Link
-            to="/waitingroom"
-            onClick={() => setNavMenuVisible(false)}
-          >
-            <Icon name="wait" size="big" />
-            <br />
-            Waiting Room
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item>
-          <Link
             to="/callroom"
             onClick={() => setNavMenuVisible(false)}
           >
@@ -85,4 +63,4 @@ function NavMenu() {
   );
 }
 
-export default NavMenu;
+export default NavMenuDoctor;
