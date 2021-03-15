@@ -5,7 +5,8 @@ import WaitingRoom from 'views/WaitingRoom';
 import CallRoom from 'views/CallRoom';
 import HomeDoctor from 'views/HomeDoctor';
 // import HomePatient from 'views/HomePatient';
-import NavMenu from 'components/NavMenu';
+import NavMenuDoctor from 'components/NavMenuDoctor';
+import NavMenuPatient from 'components/NavMenuPatient';
 
 import SocketContextProvider from 'contexts/SocketContext';
 import StreamContextProvider from 'contexts/StreamContext';
@@ -21,7 +22,14 @@ import {
   Sidebar,
 } from 'semantic-ui-react';
 
-function AppBody() {
+function AppBody({ isDoctor }) {
+  function showNavMenu() {
+    if (isDoctor) {
+      return <NavMenuDoctor />;
+    }
+    return <NavMenuPatient />;
+  }
+
   return (
     <>
       <Grid.Row style={{ height: '95%' }}>
@@ -29,7 +37,7 @@ function AppBody() {
 
           <Router>
             <Sidebar.Pushable>
-              <NavMenu />
+              {showNavMenu()}
 
               <Sidebar.Pusher>
                 <Segment basic>

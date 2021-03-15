@@ -43,13 +43,14 @@ function App() {
 
                 <Grid.Column width={4}>
                   <Checkbox
+                    label="Patient/Doctor"
                     toggle
                     onChange={toggleDoctor}
                   />
                 </Grid.Column>
               </Grid.Row>
 
-              <AppBody />
+              <AppBody isDoctor={isDoctor} />
             </NavMenuContextProvider>
           </UserIdContextProvider>
         </Grid>
