@@ -4,9 +4,10 @@ import AppHeader from 'containers/AppHeader';
 import AppBody from 'containers/AppBody';
 import NavMenuContextProvider from 'contexts/NavMenuContext';
 import {
-  Button,
+  Checkbox,
   Container,
   Grid,
+  Header,
 } from 'semantic-ui-react';
 
 // TEST
@@ -14,7 +15,15 @@ import UserIdContextProvider from 'contexts/UserIdContext';
 
 function App() {
   // TEST: control doctor/patient ui
-  const [, setIsDoctor] = useState(false);
+  const [isDoctor, setIsDoctor] = useState(false);
+
+  function toggleDoctor() {
+    if (isDoctor) {
+      setIsDoctor(false);
+    } else {
+      setIsDoctor(true);
+    }
+  }
 
   return (
     <div className="App">
@@ -22,24 +31,21 @@ function App() {
         <Grid style={{ height: '100vh' }}>
           <UserIdContextProvider>
             <NavMenuContextProvider>
-              <AppHeader />
 
               <Grid.Row>
-                <Grid.Column textAlign="center">
-                  <Button
-                    basic
-                    color="red"
-                    onClick={() => setIsDoctor(true)}
-                  >
-                    Doctor
-                  </Button>
-                  <Button
-                    basic
-                    color="blue"
-                    onClick={() => setIsDoctor(false)}
-                  >
-                    Patient
-                  </Button>
+                <Grid.Column width={2}>
+                  <AppHeader />
+                </Grid.Column>
+
+                <Grid.Column width={10}>
+                  <Header as="h2" textAlign="center">Telemedicine Application</Header>
+                </Grid.Column>
+
+                <Grid.Column width={4}>
+                  <Checkbox
+                    toggle
+                    onChange={toggleDoctor}
+                  />
                 </Grid.Column>
               </Grid.Row>
 
