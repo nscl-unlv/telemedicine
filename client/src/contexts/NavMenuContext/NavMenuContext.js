@@ -1,19 +1,18 @@
-import React, { 
-  createContext, 
-  useState 
+import React, {
+  createContext,
+  useState,
 } from 'react';
 
 export const NavMenuContext = createContext();
 
-const NavMenuContextProvider = props => {
+const NavMenuContextProvider = ({ children }) => {
   const [navMenuVisible, setNavMenuVisible] = useState(false);
 
-
   return (
-    <NavMenuContext.Provider 
+    <NavMenuContext.Provider
       value={{ navMenuVisible, setNavMenuVisible }}
     >
-      {props.children}
+      {children}
     </NavMenuContext.Provider>
   );
 };

@@ -1,31 +1,30 @@
-import React, { 
+import React, {
   useContext,
-  useEffect, 
-  useState } 
-from 'react';
-import { 
-  Button, 
-  Card, 
-  Image
+  useEffect,
+  useState,
+}
+  from 'react';
+import {
+  Button,
+  Card,
+  Image,
 } from 'semantic-ui-react';
-import boyAvator from './images/boy-avatar.png';
 import { SocketContext } from 'contexts/SocketContext';
 import { StreamContext } from 'contexts/StreamContext';
 import { Link } from 'react-router-dom';
-
+import boyAvator from './images/boy-avatar.png';
 
 function CallRoom() {
   const [patientsWaiting, setPatientsWaiting] = useState([]);
-  const { 
+  const {
     allPeers,
-    disconnectSocket,
     initSocket,
     mySocketId,
-    socketAlive
+    socketAlive,
   } = useContext(SocketContext);
-  const { 
+  const {
     initStream,
-    callPeer 
+    callPeer,
   } = useContext(StreamContext);
 
   useEffect(() => {
@@ -33,13 +32,13 @@ function CallRoom() {
       initSocket();
     }
 
-    // Cleanup 
+    // Cleanup
     return () => {
       console.log('clean up call room');
-      //if(!socketAlive && !keepSocket) {
+      // if(!socketAlive && !keepSocket) {
       //  disconnectSocket();
-      //}
-    }
+      // }
+    };
   }, []);
 
   // update patients upon peer change on socket server
@@ -47,35 +46,38 @@ function CallRoom() {
     if (allPeers.length) {
       // TODO: need to remove all doctors eventually
       const patientsOnly = allPeers
-                             .filter(peer => peer.sid !== mySocketId);
+        .filter((peer) => peer.sid !== mySocketId);
       setPatientsWaiting(patientsOnly);
     }
   }, [allPeers]);
 
-  // TODO: useEffect to fetch patients from database 
+  // TODO: useEffect to fetch patients from database
 
   return (
     <>
       <h1>Call Room</h1>
-      <h2>Socket Id: {mySocketId}</h2>
+      <h2>
+        Socket Id:
+        {mySocketId}
+      </h2>
 
       <Card.Group stackable>
-        {patientsWaiting.map(patient => (
+        {patientsWaiting.map((patient) => (
           <Card key={patient.sid}>
             <Card.Content>
               <Image
-                floated='right'
-                size='mini'
-                src={ boyAvator }
+                floated="right"
+                size="mini"
+                src={boyAvator}
               />
               <Card.Header>{patient.sid}</Card.Header>
             </Card.Content>
             <Card.Content extra>
               <div>
-                <Link to='/chatroom'>
-                  <Button 
-                    basic 
-                    color='green'
+                <Link to="/chatroom">
+                  <Button
+                    basic
+                    color="green"
                     onClick={() => {
                       // start video before calling
                       initStream()
@@ -83,10 +85,12 @@ function CallRoom() {
                           callPeer(patient.sid);
                         });
                     }}
-                  >Call</Button>
+                  >
+                    Call
+                  </Button>
                 </Link>
-                <Link to='#'>
-                  <Button basic color='blue'>Profile</Button>
+                <Link to="#">
+                  <Button basic color="blue">Profile</Button>
                 </Link>
               </div>
             </Card.Content>

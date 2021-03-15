@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ChatRoom from 'views/ChatRoom';
 import CheckIn from 'views/CheckIn';
 import WaitingRoom from 'views/WaitingRoom';
 import CallRoom from 'views/CallRoom';
 import HomeDoctor from 'views/HomeDoctor';
-import HomePatient from 'views/HomePatient';
+// import HomePatient from 'views/HomePatient';
 import NavMenu from 'components/NavMenu';
 
 import SocketContextProvider from 'contexts/SocketContext';
@@ -13,18 +13,18 @@ import StreamContextProvider from 'contexts/StreamContext';
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
 } from 'react-router-dom';
-import { 
+import {
   Grid,
   Segment,
-  Sidebar
+  Sidebar,
 } from 'semantic-ui-react';
 
 function AppBody() {
   return (
     <>
-      <Grid.Row style={{height: '95%'}}>
+      <Grid.Row style={{ height: '95%' }}>
         <Grid.Column width={16}>
 
           <Router>
@@ -35,31 +35,31 @@ function AppBody() {
                 <Segment basic>
                   <Switch>
 
-                      <SocketContextProvider>
-                        <StreamContextProvider>
+                    <SocketContextProvider>
+                      <StreamContextProvider>
 
-                          <Route path='/home'>
-                            <HomeDoctor />
-                          </Route>
+                        <Route path="/home">
+                          <HomeDoctor />
+                        </Route>
 
-                          <Route path='/checkin'>
-                            <CheckIn />
-                          </Route>
+                        <Route path="/checkin">
+                          <CheckIn />
+                        </Route>
 
-                          <Route path='/callroom'>
-                            <CallRoom />
-                          </Route>
+                        <Route path="/callroom">
+                          <CallRoom />
+                        </Route>
 
-                          <Route path='/waitingroom'>
-                            <WaitingRoom />
-                          </Route>
+                        <Route path="/waitingroom">
+                          <WaitingRoom />
+                        </Route>
 
-                          <Route path='/chatroom'>
-                              <ChatRoom />
-                          </Route>
+                        <Route path="/chatroom">
+                          <ChatRoom />
+                        </Route>
 
-                        </StreamContextProvider>
-                      </SocketContextProvider>
+                      </StreamContextProvider>
+                    </SocketContextProvider>
 
                   </Switch>
                 </Segment>
