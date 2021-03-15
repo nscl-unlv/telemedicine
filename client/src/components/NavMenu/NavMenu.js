@@ -1,17 +1,10 @@
 import React, { useContext } from 'react';
-import {
-  Icon,
-  Menu,
-  Sidebar,
-} from 'semantic-ui-react';
+import { Icon, Menu, Sidebar } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { NavMenuContext } from 'contexts/NavMenuContext';
 
 function NavMenu() {
-  const {
-    navMenuVisible,
-    setNavMenuVisible,
-  } = useContext(NavMenuContext);
+  const { navMenuVisible, setNavMenuVisible } = useContext(NavMenuContext);
 
   return (
     <>
@@ -25,12 +18,8 @@ function NavMenu() {
         visible={navMenuVisible}
         width="thin"
       >
-
         <Menu.Item>
-          <Link
-            to="/home"
-            onClick={() => setNavMenuVisible(false)}
-          >
+          <Link to="/home" onClick={() => setNavMenuVisible(false)}>
             <Icon name="home" size="big" />
             <br />
             Home
@@ -38,10 +27,7 @@ function NavMenu() {
         </Menu.Item>
 
         <Menu.Item>
-          <Link
-            to="/checkin"
-            onClick={() => setNavMenuVisible(false)}
-          >
+          <Link to="/checkin" onClick={() => setNavMenuVisible(false)}>
             <Icon name="check" size="big" />
             <br />
             Check-In
@@ -49,10 +35,7 @@ function NavMenu() {
         </Menu.Item>
 
         <Menu.Item>
-          <Link
-            to="/waitingroom"
-            onClick={() => setNavMenuVisible(false)}
-          >
+          <Link to="/waitingroom" onClick={() => setNavMenuVisible(false)}>
             <Icon name="wait" size="big" />
             <br />
             Waiting Room
@@ -60,10 +43,7 @@ function NavMenu() {
         </Menu.Item>
 
         <Menu.Item>
-          <Link
-            to="/callroom"
-            onClick={() => setNavMenuVisible(false)}
-          >
+          <Link to="/callroom" onClick={() => setNavMenuVisible(false)}>
             <Icon name="call" size="big" />
             <br />
             Call Room
@@ -71,10 +51,7 @@ function NavMenu() {
         </Menu.Item>
 
         <Menu.Item>
-          <Link
-            to="/chatroom"
-            onClick={() => setNavMenuVisible(false)}
-          >
+          <Link to="/chatroom" onClick={() => setNavMenuVisible(false)}>
             <Icon name="video" size="big" />
             <br />
             Chat Room

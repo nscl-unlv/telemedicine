@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
 import { SocketContext } from 'contexts/SocketContext';
 import Peer from 'simple-peer';
 
@@ -31,7 +26,8 @@ const StreamContextProvider = ({ children }) => {
               facingMode: 'user',
             },
             audio: false,
-          }).then((stream) => {
+          })
+          .then((stream) => {
             setMediaStream(stream);
             if (myStreamRef.current) {
               console.log('initiating stream...');
@@ -85,8 +81,7 @@ const StreamContextProvider = ({ children }) => {
     });
 
     peer.on('signal', (data) => {
-      socketRef.current.emit('acceptCall',
-        { signal: data, to: callerSid });
+      socketRef.current.emit('acceptCall', { signal: data, to: callerSid });
     });
 
     peer.on('stream', (stream) => {
@@ -116,15 +111,16 @@ const StreamContextProvider = ({ children }) => {
   }
 
   return (
-    <StreamContext.Provider value={{
-      acceptCall,
-      callPeer,
-      initStream,
-      mediaStream,
-      otherStreamRef,
-      myStreamRef,
-      streamOff,
-    }}
+    <StreamContext.Provider
+      value={{
+        acceptCall,
+        callPeer,
+        initStream,
+        mediaStream,
+        otherStreamRef,
+        myStreamRef,
+        streamOff,
+      }}
     >
       {children}
     </StreamContext.Provider>

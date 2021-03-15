@@ -1,22 +1,17 @@
-import React, { 
-  useEffect, 
-  useState,
-  useRef
-} from 'react';
-import io from "socket.io-client";
+import React, { useEffect, useState, useRef } from 'react';
+import io from 'socket.io-client';
 
 function Socket() {
-  const [ socketId, setSocketId ]  = useState(""); 
+  const [socketId, setSocketId] = useState('');
 
   const socket = useRef();
 
   useEffect(() => {
     socket.current = io('/');
 
-    socket.current.on("yourID", (id) => {
+    socket.current.on('yourID', (id) => {
       setSocketId(id);
     });
-
   }, []);
 
   const ShowId = () => {
@@ -24,7 +19,7 @@ function Socket() {
       console.log(socketId);
     }
     return <></>;
-  }
+  };
 
   return (
     <>

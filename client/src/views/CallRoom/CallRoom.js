@@ -1,14 +1,5 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-}
-  from 'react';
-import {
-  Button,
-  Card,
-  Image,
-} from 'semantic-ui-react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Button, Card, Image } from 'semantic-ui-react';
 import { SocketContext } from 'contexts/SocketContext';
 import { StreamContext } from 'contexts/StreamContext';
 import { Link } from 'react-router-dom';
@@ -16,16 +7,10 @@ import boyAvator from './images/boy-avatar.png';
 
 function CallRoom() {
   const [patientsWaiting, setPatientsWaiting] = useState([]);
-  const {
-    allPeers,
-    initSocket,
-    mySocketId,
-    socketAlive,
-  } = useContext(SocketContext);
-  const {
-    initStream,
-    callPeer,
-  } = useContext(StreamContext);
+  const { allPeers, initSocket, mySocketId, socketAlive } = useContext(
+    SocketContext
+  );
+  const { initStream, callPeer } = useContext(StreamContext);
 
   useEffect(() => {
     if (!socketAlive) {
@@ -45,8 +30,7 @@ function CallRoom() {
   useEffect(() => {
     if (allPeers.length) {
       // TODO: need to remove all doctors eventually
-      const patientsOnly = allPeers
-        .filter((peer) => peer.sid !== mySocketId);
+      const patientsOnly = allPeers.filter((peer) => peer.sid !== mySocketId);
       setPatientsWaiting(patientsOnly);
     }
   }, [allPeers]);
@@ -65,11 +49,7 @@ function CallRoom() {
         {patientsWaiting.map((patient) => (
           <Card key={patient.sid}>
             <Card.Content>
-              <Image
-                floated="right"
-                size="mini"
-                src={boyAvator}
-              />
+              <Image floated="right" size="mini" src={boyAvator} />
               <Card.Header>{patient.sid}</Card.Header>
             </Card.Content>
             <Card.Content extra>
@@ -80,17 +60,18 @@ function CallRoom() {
                     color="green"
                     onClick={() => {
                       // start video before calling
-                      initStream()
-                        .then(() => {
-                          callPeer(patient.sid);
-                        });
+                      initStream().then(() => {
+                        callPeer(patient.sid);
+                      });
                     }}
                   >
                     Call
                   </Button>
                 </Link>
                 <Link to="#">
-                  <Button basic color="blue">Profile</Button>
+                  <Button basic color="blue">
+                    Profile
+                  </Button>
                 </Link>
               </div>
             </Card.Content>

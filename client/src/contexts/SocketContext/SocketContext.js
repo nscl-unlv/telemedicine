@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
 import io from 'socket.io-client';
 
 // TEST
@@ -69,20 +64,21 @@ function SocketContextProvider({ children }) {
   }
 
   return (
-    <SocketContext.Provider value={{
-      allPeers,
-      callAccepted,
-      callerSid,
-      callerSignal,
-      disconnectSocket,
-      initSocket,
-      mySocketId,
-      receivingCall,
-      setReceivingCall,
-      setCallAccepted,
-      socketAlive,
-      socketRef,
-    }}
+    <SocketContext.Provider
+      value={{
+        allPeers,
+        callAccepted,
+        callerSid,
+        callerSignal,
+        disconnectSocket,
+        initSocket,
+        mySocketId,
+        receivingCall,
+        setReceivingCall,
+        setCallAccepted,
+        socketAlive,
+        socketRef,
+      }}
     >
       {children}
     </SocketContext.Provider>

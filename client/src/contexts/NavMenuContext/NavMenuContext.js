@@ -1,7 +1,4 @@
-import React, {
-  createContext,
-  useState,
-} from 'react';
+import React, { createContext, useState } from 'react';
 
 export const NavMenuContext = createContext();
 
@@ -9,9 +6,7 @@ const NavMenuContextProvider = ({ children }) => {
   const [navMenuVisible, setNavMenuVisible] = useState(false);
 
   return (
-    <NavMenuContext.Provider
-      value={{ navMenuVisible, setNavMenuVisible }}
-    >
+    <NavMenuContext.Provider value={{ navMenuVisible, setNavMenuVisible }}>
       {children}
     </NavMenuContext.Provider>
   );

@@ -29,7 +29,6 @@ function ChatRoom() {
           label={{ children: <code>visible</code> }}
           onChange={(_, data) => setVisible(data.checked)}
         />
-
       </Grid.Column>
 
       <Grid.Column>
@@ -70,7 +69,6 @@ function ChatRoom() {
                   End Call
                 </Button>
               </div>
-
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>

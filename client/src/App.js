@@ -4,10 +4,7 @@ import AppHeader from 'containers/AppHeader';
 import AppBody from 'containers/AppBody';
 import NavMenuContextProvider from 'contexts/NavMenuContext';
 import {
-  Checkbox,
-  Container,
-  Grid,
-  Header,
+  Checkbox, Container, Grid, Header,
 } from 'semantic-ui-react';
 
 // TEST
@@ -31,14 +28,15 @@ function App() {
         <Grid style={{ height: '100vh' }}>
           <UserIdContextProvider>
             <NavMenuContextProvider>
-
               <Grid.Row>
                 <Grid.Column width={2}>
                   <AppHeader />
                 </Grid.Column>
 
                 <Grid.Column width={10}>
-                  <Header as="h2" textAlign="center">Telemedicine Application</Header>
+                  <Header as="h2" textAlign="center">
+                    Telemedicine Application
+                  </Header>
                 </Grid.Column>
 
                 <Grid.Column width={4}>

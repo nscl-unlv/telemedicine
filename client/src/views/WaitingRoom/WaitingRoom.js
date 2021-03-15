@@ -15,10 +15,7 @@ function WaitingRoom() {
     receivingCall,
     setReceivingCall,
   } = useContext(SocketContext);
-  const {
-    initStream,
-    acceptCall,
-  } = useContext(StreamContext);
+  const { initStream, acceptCall } = useContext(StreamContext);
   // TEST
   const { userId } = useContext(UserIdContext);
 
@@ -69,21 +66,16 @@ function WaitingRoom() {
                   color="green"
                   onClick={() => {
                     setReceivingCall(false);
-                    initStream()
-                      .then(() => {
-                        acceptCall();
-                      });
+                    initStream().then(() => {
+                      acceptCall();
+                    });
                   }}
                 >
                   Accept
                 </Button>
               </Link>
 
-              <Button
-                basic
-                color="red"
-                onClick={() => setReceivingCall(false)}
-              >
+              <Button basic color="red" onClick={() => setReceivingCall(false)}>
                 Ignore
               </Button>
             </div>
@@ -91,7 +83,7 @@ function WaitingRoom() {
         </Card>
       );
     }
-    return (<></>);
+    return <></>;
   }
 
   return (

@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-} from 'react-router-dom';
-import {
-  Grid,
-  Segment,
-  Sidebar,
-} from 'semantic-ui-react';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Grid, Segment, Sidebar } from 'semantic-ui-react';
 
 // Context Providers
 import SocketContextProvider from 'contexts/SocketContext';
@@ -38,7 +31,6 @@ function AppBody({ isDoctor }) {
     <>
       <Grid.Row style={{ height: '95%' }}>
         <Grid.Column width={16}>
-
           <Router>
             <Sidebar.Pushable>
               {navMenu()}
@@ -46,19 +38,14 @@ function AppBody({ isDoctor }) {
               <Sidebar.Pusher>
                 <Segment basic>
                   <Switch>
-
                     <SocketContextProvider>
-                      <StreamContextProvider>
-                        {routes()}
-                      </StreamContextProvider>
+                      <StreamContextProvider>{routes()}</StreamContextProvider>
                     </SocketContextProvider>
-
                   </Switch>
                 </Segment>
               </Sidebar.Pusher>
             </Sidebar.Pushable>
           </Router>
-
         </Grid.Column>
       </Grid.Row>
     </>

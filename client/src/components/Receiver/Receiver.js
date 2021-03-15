@@ -14,16 +14,10 @@ function Receiver() {
 
   let PartnerVideo;
   if (callAccepted) {
-    PartnerVideo = (
-      <Video playsInline ref={otherStreamRef} autoPlay />
-    );
+    PartnerVideo = <Video playsInline ref={otherStreamRef} autoPlay />;
   }
 
-  return (
-    <>
-      {PartnerVideo}
-    </>
-  );
+  return <>{PartnerVideo}</>;
 }
 
 export default Receiver;
