@@ -36,13 +36,11 @@ function AppBody({ isDoctor }) {
               {navMenu()}
 
               <Sidebar.Pusher>
-                <Segment basic>
-                  <Switch>
-                    <SocketContextProvider>
-                      <StreamContextProvider>{routes()}</StreamContextProvider>
-                    </SocketContextProvider>
-                  </Switch>
-                </Segment>
+                <Switch>
+                  <SocketContextProvider>
+                    <StreamContextProvider>{routes()}</StreamContextProvider>
+                  </SocketContextProvider>
+                </Switch>
               </Sidebar.Pusher>
             </Sidebar.Pushable>
           </Router>
