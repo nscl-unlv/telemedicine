@@ -15,54 +15,50 @@ function ChatRoom() {
   const { disconnectSocket } = useContext(SocketContext);
 
   return (
-    <Grid columns={1}>
-      <Grid.Column>
-        <Sidebar.Pushable>
-          <Sidebar
-            as={Menu}
-            animation="overlay"
-            direction="right"
-            icon="labeled"
-            onHide={() => setVisible(false)}
-            vertical
-            visible={visible}
-            width="wide"
+    <Sidebar.Pushable>
+      <Sidebar
+        as={Menu}
+        animation="overlay"
+        direction="right"
+        icon="labeled"
+        onHide={() => setVisible(false)}
+        vertical
+        visible={visible}
+        width="wide"
+      >
+        <ChatRoomMenu />
+      </Sidebar>
+
+      <Sidebar.Pusher>
+        <div id="video-container">
+          {/* <Image src='https://cdn.ndtv.com/tech/images/gadgets/pikachu_hi_pokemon.jpg?output-quality=80&output-format=webp' /> */}
+          <Receiver />
+
+          <div id="caller-position">
+            <Caller />
+          </div>
+        </div>
+
+        <div>
+          <Button
+            id="end-call"
+            color="red"
+            onClick={() => {
+              streamOff();
+              disconnectSocket();
+            }}
           >
-            <ChatRoomMenu />
-          </Sidebar>
-
-          <Sidebar.Pusher>
-            <div id="video-container">
-              {/* <Image src='https://cdn.ndtv.com/tech/images/gadgets/pikachu_hi_pokemon.jpg?output-quality=80&output-format=webp' /> */}
-              <Receiver />
-
-              <div id="caller-position">
-                <Caller />
-              </div>
-
-              <div>
-                <Button
-                  id="end-call"
-                  color="red"
-                  onClick={() => {
-                    streamOff();
-                    disconnectSocket();
-                  }}
-                >
-                  <Icon name="stop" />
-                  End Call
-                </Button>
-                <Icon
-                  name="info circle"
-                  size="large"
-                  onClick={() => setVisible(true)}
-                />
-              </div>
-            </div>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
-      </Grid.Column>
-    </Grid>
+            <Icon name="stop" />
+            End Call
+          </Button>
+          <Icon
+            name="info circle"
+            size="large"
+            onClick={() => setVisible(true)}
+          />
+        </div>
+      </Sidebar.Pusher>
+    </Sidebar.Pushable>
   );
 }
 
