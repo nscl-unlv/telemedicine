@@ -10,7 +10,7 @@ import ChatRoom from 'views/ChatRoom';
 function RoutesPatient() {
   return (
     <>
-      <Route path="/home">
+      <Route exact path="/">
         <HomePatient />
       </Route>
 
