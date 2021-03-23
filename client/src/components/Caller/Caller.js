@@ -3,8 +3,7 @@ import { StreamContext } from 'contexts/StreamContext';
 import styled from 'styled-components';
 
 const Video = styled.video`
-  border: 1px solid blue;
-  width: 100%;
+  width: 90%;
 `;
 
 function Caller() {

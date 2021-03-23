@@ -4,8 +4,8 @@ import { StreamContext } from 'contexts/StreamContext';
 import styled from 'styled-components';
 
 const Video = styled.video`
-  border: 1px solid blue;
   width: 100%;
+  max-height: 80vh;
 `;
 
 function Receiver() {
@@ -14,7 +14,9 @@ function Receiver() {
 
   let PartnerVideo;
   if (callAccepted) {
-    PartnerVideo = <Video playsInline ref={otherStreamRef} autoPlay />;
+    PartnerVideo = (
+      <Video id="partner-video" playsInline ref={otherStreamRef} autoPlay />
+    );
   }
 
   return <>{PartnerVideo}</>;

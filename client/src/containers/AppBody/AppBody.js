@@ -30,19 +30,17 @@ function AppBody({ isDoctor }) {
   return (
     <>
       <Grid.Row style={{ height: '95%' }}>
-        <Grid.Column width={16}>
+        <Grid.Column width={16} textAlign="center">
           <Router>
             <Sidebar.Pushable>
               {navMenu()}
 
               <Sidebar.Pusher>
-                <Segment basic>
-                  <Switch>
-                    <SocketContextProvider>
-                      <StreamContextProvider>{routes()}</StreamContextProvider>
-                    </SocketContextProvider>
-                  </Switch>
-                </Segment>
+                <Switch>
+                  <SocketContextProvider>
+                    <StreamContextProvider>{routes()}</StreamContextProvider>
+                  </SocketContextProvider>
+                </Switch>
               </Sidebar.Pusher>
             </Sidebar.Pushable>
           </Router>

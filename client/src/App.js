@@ -35,7 +35,7 @@ function App() {
 
                 <Grid.Column width={10}>
                   <Header as="h2" textAlign="center">
-                    Telemedicine Application
+                    Telemedicine
                   </Header>
                 </Grid.Column>
 
