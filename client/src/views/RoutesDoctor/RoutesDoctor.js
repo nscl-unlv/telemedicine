@@ -9,7 +9,7 @@ import ChatRoom from 'views/ChatRoom';
 function RoutesDoctor() {
   return (
     <>
-      <Route path="/home">
+      <Route exact path="/">
         <HomeDoctor />
       </Route>
 

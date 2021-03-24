@@ -19,7 +19,7 @@ function NavMenuDoctor() {
         width="thin"
       >
         <Menu.Item>
-          <Link to="/home" onClick={() => setNavMenuVisible(false)}>
+          <Link to="/" onClick={() => setNavMenuVisible(false)}>
             <Icon name="home" size="big" />
             <br />
             Home

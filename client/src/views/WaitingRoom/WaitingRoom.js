@@ -1,17 +1,19 @@
 import React, { useContext, useEffect } from 'react';
 import { SocketContext } from 'contexts/SocketContext';
-import { Button, Card } from 'semantic-ui-react';
+import {
+  Button, Card, Container, Image,
+} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import { StreamContext } from 'contexts/StreamContext';
 // TEST
 import { UserIdContext } from 'contexts/UserIdContext';
+import waitingRoomImg from './images/waiting-room.jpeg';
 
 function WaitingRoom() {
   const {
     disconnectSocket,
     initSocket,
-    mySocketId,
     receivingCall,
     setReceivingCall,
   } = useContext(SocketContext);
@@ -88,11 +90,13 @@ function WaitingRoom() {
 
   return (
     <>
-      <h1>Waiting Room</h1>
-      <h2>
-        socket id:
-        {mySocketId}
-      </h2>
+      <Container text centered>
+        <Image src={waitingRoomImg} size="big" fluid />
+        <br />
+        <h3>
+          The doctor will be with you soon, please do not leave this room.
+        </h3>
+      </Container>
       {CallNotice()}
     </>
   );

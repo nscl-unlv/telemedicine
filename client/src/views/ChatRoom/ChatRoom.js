@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Caller from 'components/Caller';
 import ChatRoomMenu from 'components/ChatRoomMenu';
 import {
-  Button, Grid, Icon, Image, Menu, Sidebar,
+  Button, Icon, Image, Menu, Sidebar,
 } from 'semantic-ui-react';
 import Receiver from 'components/Receiver';
 import { SocketContext } from 'contexts/SocketContext';
@@ -39,7 +39,7 @@ function ChatRoom() {
           </div>
         </div>
 
-        <div>
+        <div id="chat-btns">
           <Button
             id="end-call"
             color="red"
@@ -52,8 +52,9 @@ function ChatRoom() {
             End Call
           </Button>
           <Icon
+            id="info-icon"
             name="info circle"
-            size="large"
+            size="big"
             onClick={() => setVisible(true)}
           />
         </div>

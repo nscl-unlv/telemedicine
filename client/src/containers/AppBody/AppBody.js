@@ -30,7 +30,7 @@ function AppBody({ isDoctor }) {
   return (
     <>
       <Grid.Row style={{ height: '95%' }}>
-        <Grid.Column width={16} textAlign="center">
+        <Grid.Column>
           <Router>
             <Sidebar.Pushable>
               {navMenu()}

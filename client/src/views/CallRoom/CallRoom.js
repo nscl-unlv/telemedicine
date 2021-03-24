@@ -4,11 +4,14 @@ import { SocketContext } from 'contexts/SocketContext';
 import { StreamContext } from 'contexts/StreamContext';
 import { Link } from 'react-router-dom';
 import boyAvator from './images/boy-avatar.png';
+import './CallRoom.css';
 
 function CallRoom() {
   const [patientsWaiting, setPatientsWaiting] = useState([]);
-  const { allPeers, initSocket, mySocketId, socketAlive } = useContext(
-    SocketContext
+  const {
+    allPeers, initSocket, mySocketId, socketAlive,
+  } = useContext(
+    SocketContext,
   );
   const { initStream, callPeer } = useContext(StreamContext);
 
@@ -39,13 +42,7 @@ function CallRoom() {
 
   return (
     <>
-      <h1>Call Room</h1>
-      <h2>
-        Socket Id:
-        {mySocketId}
-      </h2>
-
-      <Card.Group stackable>
+      <Card.Group id="patient-cards" stackable textAlign="center">
         {patientsWaiting.map((patient) => (
           <Card key={patient.sid}>
             <Card.Content>
