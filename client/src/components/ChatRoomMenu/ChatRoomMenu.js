@@ -1,21 +1,30 @@
-import React from 'react';
-import { Icon, Menu } from 'semantic-ui-react';
+import React, { useContext } from 'react';
+import { Header, Container } from 'semantic-ui-react';
+import './ChatRoomMenu.css';
+
+// TEST -- pull from database
+import { UserIdContext } from 'contexts/UserIdContext';
 
 function ChatRoomMenu() {
+  const { profilePatient } = useContext(UserIdContext);
+
   return (
     <>
-      <Menu.Item as="a">
-        <Icon name="home" />
-        Home
-      </Menu.Item>
-      <Menu.Item as="a">
-        <Icon name="gamepad" />
-        Games
-      </Menu.Item>
-      <Menu.Item as="a">
-        <Icon name="camera" />
-        Channels
-      </Menu.Item>
+      <Container id="menu-container" text>
+        <Header as="h3">Patient Information</Header>
+        <p>
+          First Name:
+          {` ${profilePatient.firstName}`}
+        </p>
+        <p>
+          Last Name:
+          {` ${profilePatient.lastName}`}
+        </p>
+        <p>
+          Email:
+          {` ${profilePatient.email}`}
+        </p>
+      </Container>
     </>
   );
 }

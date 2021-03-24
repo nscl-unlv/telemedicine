@@ -32,3 +32,8 @@
 #chat-btns {
     text-align: center;
 }
+
+#info-icon {
+    margin-top: 15px;
+    float: left;
+}
