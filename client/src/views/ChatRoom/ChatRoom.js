@@ -39,7 +39,7 @@ function ChatRoom() {
           </div>
         </div>
 
-        <div>
+        <div id="chat-btns">
           <Button
             id="end-call"
             color="red"

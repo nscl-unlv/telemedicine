@@ -29,7 +29,7 @@ function App() {
           <UserIdContextProvider>
             <NavMenuContextProvider>
               <Grid.Row>
-                <Grid.Column width={2}>
+                <Grid.Column width={2} textAlign="center">
                   <AppHeader />
                 </Grid.Column>
 
