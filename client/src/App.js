@@ -25,7 +25,7 @@ function App() {
   return (
     <div className="App">
       <Container>
-        <Grid style={{ height: '100vh' }}>
+        <Grid style={{ height: '100vh' }} celled>
           <UserIdContextProvider>
             <NavMenuContextProvider>
               <Grid.Row>
@@ -39,12 +39,8 @@ function App() {
                   </Header>
                 </Grid.Column>
 
-                <Grid.Column width={4}>
-                  <Checkbox
-                    label="Patient/Doctor"
-                    toggle
-                    onChange={toggleDoctor}
-                  />
+                <Grid.Column textAlign="center" width={4}>
+                  <Checkbox toggle onChange={toggleDoctor} />
                 </Grid.Column>
               </Grid.Row>
 
