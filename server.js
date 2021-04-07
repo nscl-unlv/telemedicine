@@ -1,3 +1,8 @@
+/*
+ * server.js
+ * Entry file for the Websocket Server (WSS).
+*/
+
 const express = require('express');
 const http = require('http');
 const socket = require('socket.io');
@@ -13,50 +18,68 @@ const waitingRoomRoutes = require('./src/routes/waiting-room')
 app.use('/waitingroom', waitingRoomRoutes);
 
 
+// Store peers connected to WSS
 const peers = new Map(); 
 
-// socket routes
+//------------------ Websocket Routes -------------------------//
+
+// returns all the peers connected to the WSS
 app.get('/socket', (_, res) => {
-  console.log('requested all connected socket peers');
   const peersJson = utils.strMapToObj(peers);
   res.json(peersJson);
 });
 
-// socket listeners
+//--------------- Websocket Listeners -------------------------//
+
+// Fire when a peer connects
 io.on('connection', socket => {
   const socketId = socket.id
   const userId = socket.request._query['userId'];
+  savePeer(peers, socketId, userId)
 
-  if (!peers.get(socket.id)) {
-    peers.set(socketId, userId);
-    console.log(`Socket Id: ${socketId} - User Id: ${userId} connected`);
-  }
-
+  // Emit the socket id back to the connecting peer
   socket.emit('yourID', socketId);
 
+  // Broadcast json array of all peers connected WSS
   io.sockets.emit('allPeers', utils.strMapToObj(peers));
 
+  // Fire when a peer disconnects
   socket.on('disconnect', () => {
-    console.log(`${socketId} disconnected`)
-    peers.delete(socketId);
-    io.sockets.emit('peerDisconnected', utils.strMapToObj(peers));
+    deletePeer(peers, socketId);
   })
 
+  // Fire when a peer calls another peer
   socket.on("callUser", (data) => {
     console.log(`calling ${data.userToCall}`);
     io.to(data.userToCall).emit('hey', {signal: data.signalData, from: data.from});
   })
 
-  //socket.on('callUser', (data) => {
-  //  io.to(data.userToCall).emit('hey', {from: data.from});
-  //})
-
+  // Fire when receiver accepts a websocket connection from the caller
   socket.on('acceptCall', (data) => {
     io.to(data.to).emit('callAccepted', data.signal);
   })
 });
 
-// serve application
+//------------------ Helper Functions -------------------------//
+
+function savePeer(currentPeers, socketId, userId) {
+  const peerExist = currentPeers.get(socketId);
+  if (!peerExist) {
+    currentPeers.set(socketId, userId);
+    console.log(`Socket Id: ${socketId} - User Id: ${userId} connected`);
+  }
+}
+
+function deletePeer(currentPeers, socketId) {
+  currentPeers.delete(socketId);
+  console.log(`${socketId} disconnected`)
+
+  // Broadcast the remaining peers
+  io.sockets.emit('peerDisconnected', utils.strMapToObj(currentPeers));
+}
+
+//--------------- Serve Application -------------------------//
+
 server.listen(port, () => {
     console.log(`application server listening on ${port}`)
 });
