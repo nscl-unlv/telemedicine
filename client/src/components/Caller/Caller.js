@@ -1,9 +1,4 @@
-/*
- * Caller.js
- * This component shows a video stream of yourself during
- * a video chat sesssion.
- *
- */
+// Caller.js
 
 import React, { useContext } from 'react';
 import styled from 'styled-components';
@@ -15,6 +10,16 @@ const Video = styled.video`
   width: 90%;
 `;
 
+/**
+ *
+ * Caller component shows a video stream of yourself during
+ * a video chat sesssion.
+ *
+ * @component
+ * @example
+ * <Caller />
+ *
+ */
 function Caller() {
   const { myStreamRef } = useContext(StreamContext);
 

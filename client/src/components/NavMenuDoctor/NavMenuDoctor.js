@@ -1,9 +1,4 @@
-/*
- * NavMenuDoctor.js
- * The drop down navigationmenu when the user is a doctor.
- * Menu items: Home, Call Room, Chat Room
- *
- */
+// NavMenuDoctor.js
 
 import React, { useContext } from 'react';
 import { Icon, Menu, Sidebar } from 'semantic-ui-react';
@@ -12,6 +7,16 @@ import { Link } from 'react-router-dom';
 // Contexts
 import { NavMenuContext } from 'contexts/NavMenuContext';
 
+/**
+ * NavMenuDoctor shows the navigation menu
+ * when the user is a doctor.
+ * Menu items: Home, Call Room, Chat Room
+ *
+ * @component
+ * @example
+ * <NavMenuDoctor />
+ *
+ */
 function NavMenuDoctor() {
   const { navMenuVisible, setNavMenuVisible } = useContext(NavMenuContext);
 
