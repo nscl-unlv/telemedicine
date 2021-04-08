@@ -1,7 +1,16 @@
+/*
+ * Receiver.js
+ * Shows the video stream of the other person
+ * after the receiver accepts the call.
+ *
+ */
+
 import React, { useContext } from 'react';
+import styled from 'styled-components';
+
+// Contexts
 import { SocketContext } from 'contexts/SocketContext';
 import { StreamContext } from 'contexts/StreamContext';
-import styled from 'styled-components';
 
 const Video = styled.video`
   width: 100%;

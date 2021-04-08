@@ -1,11 +1,21 @@
+/*
+ * App.js
+ * root entry file for web application.
+ *
+ */
+
 import React, { useState } from 'react';
-import './App.css';
-import AppHeader from 'containers/AppHeader';
-import AppBody from 'containers/AppBody';
-import NavMenuContextProvider from 'contexts/NavMenuContext';
 import {
   Checkbox, Container, Grid, Header,
 } from 'semantic-ui-react';
+
+// Components
+import AppHeader from 'containers/AppHeader';
+import AppBody from 'containers/AppBody';
+import NavMenuContextProvider from 'contexts/NavMenuContext';
+
+// Styling
+import './App.css';
 
 // TEST
 import UserIdContextProvider from 'contexts/UserIdContext';
