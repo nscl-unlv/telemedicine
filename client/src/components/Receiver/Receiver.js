@@ -1,13 +1,26 @@
+// Receiver.js
+
 import React, { useContext } from 'react';
+import styled from 'styled-components';
+
+// Contexts
 import { SocketContext } from 'contexts/SocketContext';
 import { StreamContext } from 'contexts/StreamContext';
-import styled from 'styled-components';
 
 const Video = styled.video`
   width: 100%;
   max-height: 80vh;
 `;
 
+/**
+ * Receiver the video stream of the other person
+ * after the receiver accepts the call.
+ *
+ * @component
+ * @example
+ * <Receiver />
+ *
+ */
 function Receiver() {
   const { callAccepted } = useContext(SocketContext);
   const { otherStreamRef } = useContext(StreamContext);

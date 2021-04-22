@@ -1,11 +1,25 @@
+// ChatRoomMenu.js
+
 import React, { useContext } from 'react';
 import { Header, Container } from 'semantic-ui-react';
+
+// Styling
 import './ChatRoomMenu.css';
 
-// TEST -- pull from database
+// TEST -- will pull from database
 import { UserIdContext } from 'contexts/UserIdContext';
 
+/**
+ * ChatRoomMenu is a side slide-out menu
+ * to show patient profile during a video session.
+ *
+ * @component
+ * @example
+ * <ChatRoomMenu />
+ *
+ */
 function ChatRoomMenu() {
+  // TEST -- will pull from database
   const { profilePatient } = useContext(UserIdContext);
 
   return (

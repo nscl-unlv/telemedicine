@@ -1,3 +1,10 @@
+/*
+ * NavMenuContext.js
+ * Context Provider that control the visibilty state of
+ * the navigation menu.
+ *
+ */
+
 import React, { createContext, useState } from 'react';
 
 export const NavMenuContext = createContext();

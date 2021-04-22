@@ -1,8 +1,21 @@
+// NavMenuPatient.js
+
 import React, { useContext } from 'react';
 import { Icon, Menu, Sidebar } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+
+// Contexts
 import { NavMenuContext } from 'contexts/NavMenuContext';
 
+/**
+ * NavMenuPatient shows the navigation menu when the user is a patient.
+ * Menu views: Home, Check In, Waiting Room, Chat Room.
+ *
+ * @component
+ * @example
+ * <NavMenuPatient />
+ *
+ */
 function NavMenuPatient() {
   const { navMenuVisible, setNavMenuVisible } = useContext(NavMenuContext);
 
