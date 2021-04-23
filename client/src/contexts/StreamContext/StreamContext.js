@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useRef, useState } from 'react';
+import React, {
+  createContext, useContext, useRef, useState,
+} from 'react';
 import { SocketContext } from 'contexts/SocketContext';
 import Peer from 'simple-peer';
 
@@ -46,6 +48,12 @@ const StreamContextProvider = ({ children }) => {
 
     const peer = new Peer({
       initiator: true,
+      config: {
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
+        ],
+      },
       trickle: false,
       stream: myStreamRef.current.srcObject,
     });
@@ -76,6 +84,12 @@ const StreamContextProvider = ({ children }) => {
 
     const peer = new Peer({
       initiator: false,
+      config: {
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
+        ],
+      },
       trickle: false,
       stream: myStreamRef.current.srcObject,
     });
