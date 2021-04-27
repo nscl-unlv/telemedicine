@@ -25,10 +25,8 @@ function SocketContextProvider({ children }) {
   const [userId, setUserId] = useState('');
 
   const id = uuidv4();
-  // setUserId(id);
 
   useEffect(() => {
-    console.log(`user id: ${id}`);
     setUserId(id);
   }, []);
 

@@ -6,7 +6,12 @@ function AppHeader() {
   const { setNavMenuVisible } = useContext(NavMenuContext);
 
   return (
-    <Icon name="bars" size="large" onClick={() => setNavMenuVisible(true)} />
+    <Icon
+      aria-label="menu"
+      name="bars"
+      size="large"
+      onClick={() => setNavMenuVisible(true)}
+    />
   );
 }
 
