@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Caller from 'components/Caller';
 import ChatRoomMenu from 'components/ChatRoomMenu';
 import {
-  Button, Icon, Image, Menu, Sidebar,
+  Button, Icon, Menu, Sidebar,
 } from 'semantic-ui-react';
 import Receiver from 'components/Receiver';
 import { SocketContext } from 'contexts/SocketContext';
