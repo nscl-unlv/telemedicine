@@ -24,6 +24,7 @@
       "jsx-a11y/anchor-is-valid": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "react/prop-types": "off",
+      "no-console": "off",
       "no-param-reassign": "off",
       "no-unused-vars": "warn"
 
