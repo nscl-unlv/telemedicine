@@ -25,7 +25,13 @@ function Caller() {
 
   return (
     <>
-      <Video playsInline muted ref={myStreamRef} autoPlay />
+      <Video
+        aria-label="caller-video"
+        playsInline
+        muted
+        ref={myStreamRef}
+        autoPlay
+      />
     </>
   );
 }
