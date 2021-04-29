@@ -28,7 +28,13 @@ function Receiver() {
   let PartnerVideo;
   if (callAccepted) {
     PartnerVideo = (
-      <Video id="partner-video" playsInline ref={otherStreamRef} autoPlay />
+      <Video
+        aria-label="receiver-video"
+        id="partner-video"
+        playsInline
+        ref={otherStreamRef}
+        autoPlay
+      />
     );
   }
 
