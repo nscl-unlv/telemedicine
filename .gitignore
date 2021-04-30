@@ -18,7 +18,7 @@ build
 .env.test.local
 .env.production.local
 .eslintcache
-tags
+tags*
 
 npm-debug.log*
 yarn-debug.log*

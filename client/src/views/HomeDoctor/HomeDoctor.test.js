@@ -2,17 +2,17 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import UserIdContextProvider from 'contexts/UserIdContext';
 import NavMenuContextProvider from 'contexts/NavMenuContext';
-import HomePatient from './HomePatient';
+import HomeDoctor from './HomeDoctor';
 
-describe('<HomePatient />', () => {
-  it('render <HomePatient />', () => {
+describe('<HomeDoctor />', () => {
+  it('render <HomeDoctor />', () => {
     render(
       <UserIdContextProvider>
         <NavMenuContextProvider>
-          <HomePatient />
+          <HomeDoctor />
         </NavMenuContextProvider>
       </UserIdContextProvider>,
     );
-    expect(screen.getByText(/Welcome/)).toBeInTheDocument();
+    expect(screen.getByText(/Dr./)).toBeInTheDocument();
   });
 });
