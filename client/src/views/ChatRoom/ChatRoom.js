@@ -53,6 +53,7 @@ function ChatRoom() {
           </Button>
           <Icon
             id="info-icon"
+            aria-label="info-button"
             name="info circle"
             size="big"
             onClick={() => setVisible(true)}
