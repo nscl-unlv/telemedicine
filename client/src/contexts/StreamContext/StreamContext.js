@@ -22,21 +22,26 @@ const StreamContextProvider = ({ children }) => {
   function initStream() {
     return new Promise((resolve, reject) => {
       if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices
-          .getUserMedia({
-            video: {
-              facingMode: 'user',
+        // TODO add to config file
+        const constraints = {
+          audio: false,
+          video: {
+            facingMode: 'user',
+            width: {
+              min: 480,
+              max: 720,
             },
-            audio: false,
-          })
-          .then((stream) => {
-            setMediaStream(stream);
-            if (myStreamRef.current) {
-              console.log('initiating stream...');
-              myStreamRef.current.srcObject = stream;
-              resolve('done');
-            }
-          });
+          },
+        };
+
+        navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+          setMediaStream(stream);
+          if (myStreamRef.current) {
+            console.log('initiating stream...');
+            myStreamRef.current.srcObject = stream;
+            resolve('done');
+          }
+        });
       } else {
         reject(new Error('stream error'));
       }
