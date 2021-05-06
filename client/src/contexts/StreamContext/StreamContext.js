@@ -101,8 +101,9 @@ const StreamContextProvider = ({ children }) => {
   }
 
   function streamOff() {
-    if (myStreamRef.current) {
+    if (mediaStream) {
       console.log('turning off streaming...');
+
       // turn off reference stream
       myStreamRef.current.srcObject.getTracks().forEach((track) => {
         track.stop();
