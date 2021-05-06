@@ -1,6 +1,9 @@
+// StreamContext.js
+
 import React, {
   createContext, useContext, useRef, useState,
 } from 'react';
+import configs from 'configs';
 import { SocketContext } from 'contexts/SocketContext';
 import Peer from 'simple-peer';
 
@@ -22,21 +25,19 @@ const StreamContextProvider = ({ children }) => {
   function initStream() {
     return new Promise((resolve, reject) => {
       if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices
-          .getUserMedia({
-            video: {
-              facingMode: 'user',
-            },
-            audio: false,
-          })
-          .then((stream) => {
-            setMediaStream(stream);
-            if (myStreamRef.current) {
-              console.log('initiating stream...');
-              myStreamRef.current.srcObject = stream;
-              resolve('done');
-            }
-          });
+        const constraints = {
+          audio: configs.audio,
+          video: configs.video,
+        };
+
+        navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+          setMediaStream(stream);
+          if (myStreamRef.current) {
+            console.log('initiating stream...');
+            myStreamRef.current.srcObject = stream;
+            resolve('done');
+          }
+        });
       } else {
         reject(new Error('stream error'));
       }
@@ -49,10 +50,7 @@ const StreamContextProvider = ({ children }) => {
     const peer = new Peer({
       initiator: true,
       config: {
-        iceServers: [
-          { urls: 'stun:stun.l.google.com:19302' },
-          { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
-        ],
+        iceServers: configs.iceServers,
       },
       trickle: false,
       stream: myStreamRef.current.srcObject,
@@ -85,10 +83,7 @@ const StreamContextProvider = ({ children }) => {
     const peer = new Peer({
       initiator: false,
       config: {
-        iceServers: [
-          { urls: 'stun:stun.l.google.com:19302' },
-          { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
-        ],
+        iceServers: configs.iceServers,
       },
       trickle: false,
       stream: myStreamRef.current.srcObject,
